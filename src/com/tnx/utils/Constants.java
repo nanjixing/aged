@@ -22,4 +22,10 @@ public class Constants {
     //注册成功
     public static final String  TORES_INSERT_SUCCESS = "tores_insert_success";//1表示成功
 
+    //user中的一些向外提供的常量以及
+    public static final String USER_IS_NULL = "user_is_null";
+    public static final String USER_PHONE_CODE = "user_phone_code";
+    public static final String USER_LOGIN_SUCCESS = "user_login_success";
+
+
 }

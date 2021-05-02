@@ -21,9 +21,12 @@ public class User implements Serializable {
     private String address;
     private String email;
 
+
     public User() {
     }
-
+    public User(String phone) {
+        this.phone = phone;
+    }
     public String getRealName() {
         return realName;
     }
