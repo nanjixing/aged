@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tnx.mapper.PayMapper">
+    <!--实体类与数据库映射字段部分-->
+    <resultMap id="ResultMapPay" type="com.tnx.po.Pay">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="sn" column="sn" jdbcType="VARCHAR"/>
+        <result property="paySn" column="pay_sn" jdbcType="VARCHAR"/>
+        <result property="totalAmount" column="total_amount" jdbcType="VARCHAR"/>
+        <result property="info" column="info" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="refundSn" column="refund_sn" jdbcType="VARCHAR"/>
+        <result property="refundAmount" column="refund_amount" jdbcType="VARCHAR"/>
+        <result property="refundInfo" column="refund_info" jdbcType="VARCHAR"/>
+        <result property="itemOrderId" column="item_order_id" jdbcType="INTEGER"/>
+        <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+
+    <!-- 声明数据库字段 -->
+    <sql id="Pay_field">
+        id,sn,pay_sn,total_amount,info,status,title,refund_sn,refund_amount,refund_info,item_order_id,add_time
+    </sql>
+
+    <!-- 实体类属性-->
+    <sql id="Pay_insert">
+        #{id},#{sn},#{paySn},#{totalAmount},#{info},#{status},#{title},#{refundSn},#{refundAmount},#{refundInfo},#{itemOrderId},#{addTime}
+    </sql>
+
+    <!-- 更新结果  -->
+    <sql id="Pay_update">
+        <if test="sn != null">
+            sn = #{sn},
+        </if>
+        <if test="paySn != null">
+            pay_sn = #{paySn},
+        </if>
+        <if test="totalAmount != null">
+            total_amount = #{totalAmount},
+        </if>
+        <if test="info != null">
+            info = #{info},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        <if test="refundSn != null">
+            refund_sn = #{refundSn},
+        </if>
+        <if test="refundAmount != null">
+            refund_amount = #{refundAmount},
+        </if>
+        <if test="refundInfo != null">
+            refund_info = #{refundInfo},
+        </if>
+        <if test="itemOrderId != null">
+            item_order_id = #{itemOrderId},
+        </if>
+        <if test="addTime != null">
+            add_time = #{addTime},
+        </if>
+    </sql>
+
+    <!-- 查询时条件   -->
+    <sql id="Pay_where">
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="sn != null">
+            and sn = #{sn}
+        </if>
+        <if test="paySn != null">
+            and pay_sn = #{paySn}
+        </if>
+        <if test="totalAmount != null">
+            and total_amount = #{totalAmount}
+        </if>
+        <if test="info != null">
+            and info = #{info}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        <if test="refundSn != null">
+            and refund_sn = #{refundSn}
+        </if>
+        <if test="refundAmount != null">
+            and refund_amount = #{refundAmount}
+        </if>
+        <if test="refundInfo != null">
+            and refund_info = #{refundInfo}
+        </if>
+        <if test="itemOrderId != null">
+            and item_order_id = #{itemOrderId}
+        </if>
+        <if test="addTime != null">
+            and add_time = #{addTime}
+        </if>
+    </sql>
+
+    <!-- 查询时条件   -->
+    <sql id="Pay_where_no_status">
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="sn != null">
+            and sn = #{sn}
+        </if>
+        <if test="totalAmount != null">
+            and total_amount = #{totalAmount}
+        </if>
+        <if test="info != null">
+            and info = #{info}
+        </if>
+
+
+        <if test="itemOrderId != null">
+            and item_order_id = #{itemOrderId}
+        </if>
+
+    </sql>
+
+    <!--    新增        -->
+    <!--    参数：实体类-->
+    <!--    返回：主键 -->
+    <insert id="insert" parameterType="com.tnx.po.Pay" useGeneratedKeys="true" keyProperty="id">
+        insert into pay(
+        <include refid="Pay_field"/>
+        ) values(
+        <include refid="Pay_insert"/>
+        )
+    </insert>
+
+    <!-- 根据实体主键删除一个实体-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from pay where id=#{id}
+    </delete>
+
+    <!-- 通过实体删除-->
+    <delete id="deleteByEntity" parameterType="com.tnx.po.Pay">
+        delete from pay where 1=1
+        <include refid="Pay_where"/>
+    </delete>
+
+    <!-- 通过map删除 -->
+    <delete id="deleteByMap" parameterType="java.util.HashMap">
+        delete from pay where 1=1
+        <include refid="Pay_where"/>
+    </delete>
+
+    <!-- 更新一个实体 -->
+    <update id="update" parameterType="com.tnx.po.Pay">
+        update pay
+        <set>
+            <include refid="Pay_update"/>
+        </set>
+        where 1=1
+        <include refid="Pay_where"/>
+    </update>
+
+    <!-- 更新一个实体,不包括pay的status -->
+    <update id="updatePay" parameterType="com.tnx.po.Pay">
+        update pay
+        <set>
+            <include refid="Pay_update"/>
+        </set>
+        where 1=1
+        <include refid="Pay_where_no_status"/>
+    </update>
+
+    <!-- 通过id进行修改-->
+    <update id="updateById" parameterType="com.tnx.po.Pay">
+        update pay
+        <set>
+            <include refid="Pay_update"/>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!-- 根据参数查询-->
+    <select id="listByMap" resultMap="ResultMapPay" parameterType="map">
+        select <include refid="Pay_field"/>
+        from pay where 1=1
+        <include refid="Pay_where"/>
+    </select>
+
+    <!-- 查询整个表 -->
+    <select id="listAll" resultMap="ResultMapPay">
+        select <include refid="Pay_field"/>
+        from pay
+    </select>
+
+    <!-- 查询所有实体,根据实体属性值为判断条件查询所有实体-->
+    <select id="listAllByEntity" resultMap="ResultMapPay" parameterType="com.tnx.po.Pay">
+        select <include refid="Pay_field"/>
+        from pay where 1=1
+        <include refid="Pay_where"/>
+    </select>
+
+    <!-- 根据主键获取一个实体-->
+    <select id="load" resultMap="ResultMapPay" parameterType="java.lang.Integer">
+        select <include refid="Pay_field"/>
+        from pay where id=#{id}
+    </select>
+
+    <!-- 根据订单号查询支付单主键-->
+    <select id="loadByItemOrderId" resultMap="ResultMapPay" parameterType="java.lang.Integer">
+        select <include refid="Pay_field"/>
+        from pay where item_order_id=#{item_order_id}
+    </select>
+
+    <!-- 根据主键获取一个实体-->
+    <select id="getById" resultMap="ResultMapPay" parameterType="java.lang.Integer">
+        select <include refid="Pay_field"/>
+        from pay where id=#{id}
+    </select>
+
+    <!-- 通过map查询-->
+    <select id="getByMap" resultMap="ResultMapPay" parameterType="map">
+        select <include refid="Pay_field"/>
+        from pay where 1=1
+        <include refid="Pay_where"/>
+    </select>
+
+    <!--通过对象查询-不分页-->
+    <select id="getByEntity" resultMap="ResultMapPay" parameterType="com.tnx.po.Pay">
+        select <include refid="Pay_field"/>
+        from pay where 1=1
+        <include refid="Pay_where_no_status"/>
+    </select>
+
+    <!-- 通过map查询分页-->
+    <select id="findByMap" resultMap="ResultMapPay" parameterType="map">
+        select <include refid="Pay_field"/>
+        from pay where 1=1
+        <include refid="Pay_where"/>
+    </select>
+
+    <!--通过对象查询分页-->
+    <select id="findByEntity" resultMap="ResultMapPay" parameterType="com.tnx.po.Pay">
+        select <include refid="Pay_field"/>
+        from pay where 1=1
+        <include refid="Pay_where"/>
+    </select>
+
+    <!--    <select id="listByOrderId" resultMap="ResultMapPayDto">-->
+    <!--        select <include refid="Pay_field"/>-->
+    <!--        from pay where item_order_id = #{id}-->
+    <!--    </select>-->
+
+    <!-- 批量新增-->
+    <!--    <select id="insertBatch" parameterType="java.util.List">-->
+    <!--        insert into pay(-->
+    <!--        <include refid="Pay_field"/>-->
+    <!--        ) values-->
+    <!--        <foreach collection="list" item="item" index="index" separator=",">-->
+    <!--            (#{sn},#{paySn},#{totalAmount},#{info},#{status},#{title},#{refundSn},#{refundAmount},#{refundInfo},#{itemOrderId}-->
+    <!--            )-->
+    <!--        </foreach>-->
+    <!--    </select>-->
+
+    <!-- 批量修改-->
+    <!--    <update id="updateBatch" parameterType="java.util.List">-->
+    <!--        <foreach collection="list" item="item" index="index" separator=";">-->
+    <!--            update pay-->
+    <!--            <set>-->
+    <!--                <if test="sn != null">-->
+    <!--                    sn = #{sn},-->
+    <!--                </if>-->
+    <!--                <if test="paySn != null">-->
+    <!--                    pay_sn = #{paySn},-->
+    <!--                </if>-->
+    <!--                <if test="totalAmount != null">-->
+    <!--                    total_amount = #{totalAmount},-->
+    <!--                </if>-->
+    <!--                <if test="info != null">-->
+    <!--                    info = #{info},-->
+    <!--                </if>-->
+    <!--                <if test="status != null">-->
+    <!--                    status = #{status},-->
+    <!--                </if>-->
+    <!--                <if test="refundSn != null">-->
+    <!--                    refund_sn = #{refundSn},-->
+    <!--                </if>-->
+    <!--                <if test="refundAmount != null">-->
+    <!--                    refund_amount = #{refundAmount},-->
+    <!--                </if>-->
+    <!--                <if test="refundInfo != null">-->
+    <!--                    refund_info = #{refundInfo},-->
+    <!--                </if>-->
+    <!--                <if test="itemOrderId != null">-->
+    <!--                    item_order_id = #{itemOrderId},-->
+    <!--                </if>-->
+    <!--            </set>-->
+    <!--            where 1=1-->
+    <!--            <if test="item.id != null">-->
+    <!--                and id = #{item.id}-->
+    <!--            </if>-->
+    <!--        </foreach>-->
+    <!--    </update>-->
+
+    <!-- 封装纯sql语法-->
+    <!-- 查询一个对象返回map-->
+    <select id="getBySqlReturnMap" resultType="map">
+        ${sql}
+    </select>
+
+    <!-- 查询一个对象返回实体类-->
+    <select id="getBySqlReturnEntity" resultMap="ResultMapPay">
+        ${sql}
+    </select>
+
+    <!-- 查询一个对象返回map列表-->
+    <select id="listBySqlReturnMap" resultType="map">
+        ${sql}
+    </select>
+
+    <!-- 查询列表返回实体-->
+    <select id="listBySqlReturnEntity" resultMap="ResultMapPay">
+        ${sql}
+    </select>
+
+    <!-- 查询分页-->
+    <select id="findBySqlRerturnEntity" resultMap="ResultMapPay">
+        ${sql}
+    </select>
+
+    <!-- 通过sql修改-->
+    <update id="updateBysql">
+        ${sql}
+    </update>
+
+    <!-- 通过sql删除-->
+    <delete id="deleteBySql">
+        ${sql}
+    </delete>
+</mapper>
