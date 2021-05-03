@@ -17,7 +17,7 @@ public class ItemOrder implements Serializable {
     private Integer id;
 
     /**
-     * 商品id
+     * 商品id(修改为是否是线下取货标志)
      */
     private Integer itemId;
 

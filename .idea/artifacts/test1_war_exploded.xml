@@ -14,8 +14,8 @@
           <element id="module-output" name="test1" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: com.google.zxing:core:2.2" />
-          <element id="library" level="project" name="Maven: com.google.zxing:javase:2.2" />
+          <element id="library" level="project" name="Maven: com.google.zxing:core:3.0.0" />
+          <element id="library" level="project" name="Maven: com.google.zxing:javase:3.0.0" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.2.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:4.2.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.2.0.RELEASE" />

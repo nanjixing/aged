@@ -27,5 +27,7 @@ public class Constants {
     public static final String USER_PHONE_CODE = "user_phone_code";
     public static final String USER_LOGIN_SUCCESS = "user_login_success";
 
+    //itemOrder订单
+    public static final String ITEM_ORDERS = "itemOrders";
 
 }
