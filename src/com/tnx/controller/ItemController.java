@@ -222,4 +222,5 @@ public class ItemController extends BaseController {
         model.addAttribute("obj", obj);
         return "item/view";
     }
+
 }

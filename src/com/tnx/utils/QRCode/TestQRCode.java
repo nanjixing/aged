@@ -3,6 +3,7 @@ package com.tnx.utils.QRCode;
 import com.google.zxing.WriterException;
 import com.tnx.po.Pay;
 import com.tnx.service.PayService;
+import com.tnx.utils.Constants;
 import com.tnx.utils.SystemContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,9 +21,9 @@ public class TestQRCode {
         QRCode qrCode = new QRCode();
         try {
             Pay pay = new Pay();
-            pay.setPaysn("0000");
+            pay.setPaysn("0001");
             pay.setTotalAmount("404");
-            qrCode.geneQRCode(pay);
+            qrCode.geneQRCode(pay, Constants.URL_HEADER_QRCODE);
             System.out.println("生成二维码成功");
         } catch (WriterException e) {
             e.printStackTrace();

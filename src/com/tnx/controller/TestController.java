@@ -1,16 +1,21 @@
 package com.tnx.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.zxing.WriterException;
 import com.tnx.po.ItemOrder;
+import com.tnx.po.Pay;
 import com.tnx.po.User;
 import com.tnx.service.ItemOrderService;
 import com.tnx.service.OrderDetailService;
+import com.tnx.service.PayService;
 import com.tnx.service.UserService;
 import com.tnx.utils.Constants;
+import com.tnx.utils.QRCode.QRCode;
 import com.tnx.utils.SystemContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +38,9 @@ public class TestController {
 
     @Autowired
     private OrderDetailService orderDetailService;
+
+    @Autowired
+    private PayService payService;
 
     private String uCode;
     private String uPhone;
@@ -120,8 +128,6 @@ public class TestController {
         }else{
             js.put(Constants.ITEM_ORDERS, "暂无订单");
         }
-        System.out.println(js.toJSONString());
-        System.out.println(SystemContext.getRealPath());
         return js.toJSONString();
     }
 
@@ -129,17 +135,27 @@ public class TestController {
     @RequestMapping(value = "/uOrderDetail",method = RequestMethod.GET)
     @ResponseBody
     public String uOrderDetail(String orderId){
-        System.out.println(orderId);
         JSONObject js = new JSONObject();
         //1. 根据订单号拿到订单详情
-
+        Pay pay = new Pay();
+        pay.setItemOrderId(Integer.parseInt(orderId));
+        Pay byEntity = payService.getByEntity(pay);
         //2. 根据订单信息生成二维码
-
-        //3. 将二维码存到服务器并得到服务器对应的url
-
-        //4. 解析服务器的url,然后存入到json对象汇总
-
-        //5. 返回json字符串
-        return "";
+        if(byEntity != null){
+            try {
+                //3. 将二维码存到服务器并得到服务器对应的url
+                String qrUrl = QRCode.geneQRCode(byEntity,Constants.URL_HEADER_QRCODE);
+                //4. 解析服务器的url,然后存入到json对象汇总
+                js.put(Constants.ORDER_QRCODE,qrUrl);
+                //5. 返回json字符串
+            } catch (WriterException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            js.put(Constants.ORDER_QRCODE, "error");
+        }
+        return js.toJSONString();
     }
 }

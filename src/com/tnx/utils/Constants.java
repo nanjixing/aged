@@ -29,5 +29,8 @@ public class Constants {
 
     //itemOrder订单
     public static final String ITEM_ORDERS = "itemOrders";
+    //二维码
+    public static final String ORDER_QRCODE = "orderQRCode";
+    public static final String URL_HEADER_QRCODE = "E:\\360MoveData\\Users\\xing\\Desktop\\bishe\\shop_fruit\\testMaven\\WebRoot\\";
 
 }

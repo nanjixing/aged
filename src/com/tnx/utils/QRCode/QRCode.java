@@ -9,6 +9,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.tnx.po.Pay;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -21,7 +22,7 @@ import java.util.HashMap;
  * @Date 2021--05--03--22:36
  **/
 public class QRCode {
-    public void geneQRCode(Pay pay) throws WriterException, IOException {
+    public static String geneQRCode(Pay pay, String filePathHeader) throws WriterException, IOException {
 //         获取二维码信息
 
 //        定义一个json字符串
@@ -44,10 +45,25 @@ public class QRCode {
         BitMatrix bitMatrix = new MultiFormatWriter().encode(s, BarcodeFormat.QR_CODE,width,height,hit);
 
 //        生成二维码图片
-        String filePath = "E:\\360MoveData\\Users\\xing\\Desktop\\bishe\\shop_fruit\\testMaven\\WebRoot\\" + "\\resource\\qrcode\\";
+//        String filePath = "E:\\360MoveData\\Users\\xing\\Desktop\\bishe\\shop_fruit\\testMaven\\WebRoot\\" + "\\resource\\qrcode\\";
+        String filePath = filePathHeader + "resource\\qrcode\\";
         String fileName = pay.getPaySn() + ".jpg";
-        Path path = FileSystems.getDefault().getPath(filePath,fileName);
-       MatrixToImageWriter.writeToPath(bitMatrix, "jpg", path);
+        String returnFile = "";
+//        Path path = FileSystems.getDefault().getPath(filePath,fileName);
+        File file = new File(filePath + fileName);
+        if (!file.exists()) {
+            MatrixToImageWriter.writeToFile(bitMatrix, "jpg", file);
+            System.out.println("文件已创建");
+        } else {
+            if(file.delete()){
+                System.out.println(file.getName() + " 文件已被删除！");
+                MatrixToImageWriter.writeToFile(bitMatrix, "jpg", file);
+            }else{
+                System.out.println("文件删除失败！");
+            }
+        }
+        returnFile +="http://391661q0s0.wicp.vip/test1_war_exploded/resource/qrcode/" + fileName;
 
+        return returnFile;
     }
 }
