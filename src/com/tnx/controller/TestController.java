@@ -11,7 +11,7 @@ import com.tnx.service.PayService;
 import com.tnx.service.UserService;
 import com.tnx.utils.Constants;
 import com.tnx.utils.QRCode.QRCode;
-import com.tnx.utils.SystemContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -132,6 +132,11 @@ public class TestController {
     }
 
 
+    /**
+     * 查看订单的二维码
+     * @param orderId
+     * @return
+     */
     @RequestMapping(value = "/uOrderDetail",method = RequestMethod.GET)
     @ResponseBody
     public String uOrderDetail(String orderId){
@@ -157,5 +162,30 @@ public class TestController {
             js.put(Constants.ORDER_QRCODE, "error");
         }
         return js.toJSONString();
+    }
+
+    /**
+     * 扫码完成支付
+     * @param scanString
+     * @return
+     */
+    @RequestMapping(value = "/scanQRCode",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String scanQRCode(String scanString){
+        System.out.println(scanString);
+        Object parse = JSONObject.parse(scanString);
+        System.out.println(parse);
+        JSONObject js = (JSONObject) parse;
+        System.out.println(js.get("pay_orderid"));
+        Integer id = Integer.valueOf(js.get("pay_orderid").toString());
+        ItemOrder load = itemOrderService.load(id);
+        if(load != null){
+            ItemOrder itemOrder = new ItemOrder();
+            itemOrder.setId(id);
+            itemOrder.setStatus(5);
+            itemOrderService.update(itemOrder);
+            return "fail";
+        }
+        return "success";
     }
 }

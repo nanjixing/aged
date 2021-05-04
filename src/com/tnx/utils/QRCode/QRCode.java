@@ -33,7 +33,7 @@ public class QRCode {
         jsonObject.put("pay_info", pay.getInfo());
         jsonObject.put("pay_title", pay.getTitle());
         jsonObject.put("pay_price", pay.getTotalAmount());
-
+        jsonObject.put("pay_orderid",pay.getItemOrderId());
 //        3. json对象转换为json字符串
         String s = jsonObject.toString();
 //        创建一个矩阵对象
@@ -66,4 +66,7 @@ public class QRCode {
 
         return returnFile;
     }
+
+
+
 }
