@@ -113,6 +113,7 @@ public class TestController {
     @RequestMapping(value = "/uItemOrder",method = RequestMethod.GET)
     @ResponseBody
     public String uItemOrder(String phone){
+        System.out.println(phone);
         User user = new User(phone);
         JSONObject js = new JSONObject();
         User byEntity = userService.getByEntity(user);
@@ -123,6 +124,9 @@ public class TestController {
         if(itemOrders.size() > 0){
             String sql = "select * from item_order where user_id = " + byEntity.getId() +
                     " and item_id = 1 and status = 0 and isDelete = 0";
+//            测试
+//            String sql = "select * from item_order where user_id = " + byEntity.getId();
+
             List<Map<String, Object>> bySql = itemOrderService.listBySqlReturnMap(sql);
             if(bySql.size() > 0)js.put(Constants.ITEM_ORDERS,bySql);
         }else{
@@ -172,10 +176,7 @@ public class TestController {
     @RequestMapping(value = "/scanQRCode",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public String scanQRCode(String scanString){
-        System.out.println(scanString);
-        Object parse = JSONObject.parse(scanString);
-        System.out.println(parse);
-        JSONObject js = (JSONObject) parse;
+        JSONObject js = (JSONObject) JSONObject.parse(scanString);
         System.out.println(js.get("pay_orderid"));
         Integer id = Integer.valueOf(js.get("pay_orderid").toString());
         ItemOrder load = itemOrderService.load(id);
@@ -183,7 +184,7 @@ public class TestController {
             ItemOrder itemOrder = new ItemOrder();
             itemOrder.setId(id);
             itemOrder.setStatus(5);
-            itemOrderService.update(itemOrder);
+            itemOrderService.updateById(itemOrder);
             return "fail";
         }
         return "success";
