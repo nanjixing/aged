@@ -33,10 +33,15 @@ public class TestQRCode {
 //            e.printStackTrace();
 //        }
 
-        String s = "{\"pay_price\":\"100.00\",\"pay_info\":\"垫子1,\",\"pay_title\":\"垫子1,\",\"pay_orderid\":50,\"pay_sn\":\"2021050322001438720501686146\"}";
-        Object parse = JSONObject.parse(s);
-        System.out.println(parse);
-        JSONObject js = (JSONObject) parse;
-        System.out.println(Integer.valueOf(js.get("pay_orderid").toString()));
+//        String s = "{\"pay_price\":\"100.00\",\"pay_info\":\"垫子1,\",\"pay_title\":\"垫子1,\",\"pay_orderid\":50,\"pay_sn\":\"2021050322001438720501686146\"}";
+//        Object parse = JSONObject.parse(s);
+//        System.out.println(parse);
+//        JSONObject js = (JSONObject) parse;
+//        System.out.println(Integer.valueOf(js.get("pay_orderid").toString()));
+        int chushi = 100000;
+        for(int i = 0; i < 10; i ++){
+            chushi += chushi * 0.05;
+        }
+        System.out.println(chushi);
     }
 }

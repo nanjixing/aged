@@ -162,6 +162,7 @@ public class ItemOrderController extends BaseController {
         ItemOrder order = new ItemOrder();
         String orderAndPayCode = getOrderNo();
         order.setStatus(-1);
+        order.setItemId(0);//0表示线上，1表示线下
         order.setCode(orderAndPayCode);
         order.setIsDelete(0);
         order.setTotal(to.setScale(2, BigDecimal.ROUND_HALF_UP).toString());//用bigdecimal设置精确度保留两位小数。
@@ -179,6 +180,7 @@ public class ItemOrderController extends BaseController {
                 de.setOrderId(order.getId());
                 de.setStatus(0);
                 de.setNum(c.getNum());
+                de.setUserId(userId);
                 de.setTotal(String.valueOf(c.getNum() * load.getPrice()));
                 orderDetailService.insert(de);
                 //修改成交数,由购物车中的商品id查找商品进行更新操作
@@ -263,8 +265,10 @@ public class ItemOrderController extends BaseController {
     }
 
     @RequestMapping("/pj")
-    public String pj(Integer id, Model model) {
-        model.addAttribute("id", id);
+    public String pj(Integer orderId, Integer itemId,Model model) {
+        System.out.println(orderId + "-----" + itemId);
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("itemId", itemId);
         return "itemOrder/pj";
     }
 

@@ -1,7 +1,10 @@
 package com.tnx.controller;
 
+import com.alipay.api.domain.ItemOrderDetail;
 import com.tnx.base.BaseController;
 import com.tnx.po.Comment;
+import com.tnx.po.ItemOrder;
+import com.tnx.po.OrderDetail;
 import com.tnx.service.CommentService;
 import com.tnx.service.ItemOrderService;
 import com.tnx.service.OrderDetailService;
@@ -36,7 +39,8 @@ public class CommentController extends BaseController {
      * 添加执行
      */
     @RequestMapping("/exAdd")
-    public String exAdd(Comment comment, HttpServletRequest request){
+    public String exAdd(Comment comment, Integer orderId, HttpServletRequest request){
+        System.out.println(orderId);
         Object attribute = request.getSession().getAttribute(Constants.USERID);
         if(attribute==null){
             return "redirect:/login/uLogin";
@@ -45,13 +49,9 @@ public class CommentController extends BaseController {
         comment.setAddTime(new Date());
         comment.setUserId(userId);
         commentService.insert(comment);
-//        修改订单以及订单的详情状态，已评价
-        String updateItemOrder = "update item_order set status = " + 4 + " where user_id = "
-                + comment.getUserId() + " and item_id = " + comment.getItemId();
+//        修改订单
+        String updateItemOrder = "update item_order set status = " + 4 + " where id = " + orderId;
         itemOrderService.updateBysql(updateItemOrder);
-        String updateOrderDetail ="update order_detail set status = " + 4 + " where user_id = "
-                + comment.getUserId() + " and item_id = " + comment.getItemId();
-        orderDetailService.updateBysql(updateOrderDetail);
         return "redirect:/itemOrder/my.action";
     }
 

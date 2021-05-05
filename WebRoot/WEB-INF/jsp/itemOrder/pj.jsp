@@ -43,7 +43,8 @@
             </div>
 <%--            添加评价--%>
             <form action="${ctx}/comment/exAdd" method="post" id="myf">
-                <input type="hidden" name="itemId" value="${id}">
+                <input type="hidden" name="itemId" value="${itemId}">
+                <input type="hidden" name="orderId" value="${orderId}">
                 <div class="bj_fff hidden_yh" style="width: 838px;height:120px;border: 1px solid #ddd; margin-top:30px;padding: 50px;">
                     <div class="width100" style="height: 32px;line-height: 32px;">
                         <div class="left_yh font16 tright" style="width: 120px;">

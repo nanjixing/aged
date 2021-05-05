@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="right_yh">
                                         <c:if test="${data.status==3}">
-                                            <a href="${ctx}/itemOrder/pj?id=${chil.itemId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
+                                            <a href="${ctx}/itemOrder/pj?orderId=${data.pay.itemOrderId}&itemId=${chil.item.id}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
                                                 去评价
                                             </a>
                                         </c:if>
@@ -137,7 +137,7 @@
                                     </div>
                                     <div class="right_yh">
                                         <c:if test="${data.status==3}">
-                                            <a href="${ctx}/itemOrder/pj?id=${chil.itemId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
+                                            <a href="${ctx}/itemOrder/pj?orderId=${data.pay.itemOrderId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
                                                 去评价
                                             </a>
                                         </c:if>
@@ -192,7 +192,7 @@
                                     </div>
                                     <div class="right_yh">
                                         <c:if test="${data.status==3}">
-                                            <a href="${ctx}/itemOrder/pj?id=${chil.itemId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
+                                            <a href="${ctx}/itemOrder/pj?orderId=${data.pay.itemOrderId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
                                                 去评价
                                             </a>
                                         </c:if>
@@ -258,7 +258,7 @@
                                     </div>
                                     <div class="right_yh">
                                         <c:if test="${data.status==3}">
-                                            <a href="${ctx}/itemOrder/pj?id=${chil.itemId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
+                                            <a href="${ctx}/itemOrder/pj?orderId=${data.pay.itemOrderId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
                                                 去评价
                                             </a>
                                         </c:if>
@@ -315,7 +315,7 @@
                                     </div>
                                     <div class="right_yh">
                                         <c:if test="${data.status==3}">
-                                            <a href="${ctx}/itemOrder/pj?id=${chil.itemId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
+                                            <a href="${ctx}/itemOrder/pj?orderId=${data.pay.itemOrderId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
                                                 去评价
                                             </a>
                                         </c:if>
@@ -371,7 +371,7 @@
                                     </div>
                                     <div class="right_yh">
                                         <c:if test="${data.status==3}">
-                                            <a href="${ctx}/itemOrder/pj?id=${chil.itemId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
+                                            <a href="${ctx}/itemOrder/pj?orderId=${data.pay.itemOrderId}" class="onfff block_yh tcenter font16 onHoverr" style="margin-top: 10px;padding-right: 6px;">
                                                 去评价
                                             </a>
                                         </c:if>

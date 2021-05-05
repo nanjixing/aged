@@ -25,7 +25,7 @@
 </head>
 <body>
 <%--    背景图div--%>
-<div class="bg"></div>
+<div ></div>
 <div class="container">
     <div class="line bouncein">
         <div class="xs6 xm4 xs3-move xm4-move">

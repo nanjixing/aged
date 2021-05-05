@@ -41,7 +41,15 @@ public class OrderDetail implements Serializable {
      */
     private String total;
 
-    public OrderDetail(Integer id, Integer itemId, Item item, Integer orderId, Integer status, Integer num, String total) {
+    /**
+     * 用户id
+     */
+    private Integer userId;
+
+    public OrderDetail() {
+    }
+
+    public OrderDetail(Integer id, Integer itemId, Item item, Integer orderId, Integer status, Integer num, String total, Integer userId) {
         this.id = id;
         this.itemId = itemId;
         this.item = item;
@@ -49,9 +57,15 @@ public class OrderDetail implements Serializable {
         this.status = status;
         this.num = num;
         this.total = total;
+        this.userId = userId;
     }
 
-    public OrderDetail() {
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getId() {

@@ -9,6 +9,7 @@
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="num" column="num" jdbcType="INTEGER"/>
         <result property="total" column="total" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <resultMap id="ResultMapOrderDetailDto" type="com.tnx.po.OrderDetail">
@@ -18,17 +19,18 @@
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="num" column="num" jdbcType="INTEGER"/>
         <result property="total" column="total" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <association property="item" column="item_id" select="com.tnx.mapper.ItemMapper.load"/>
     </resultMap>
 
     <!-- 声明数据库字段 -->
     <sql id="OrderDetail_field">
-        id,item_id,order_id,status,num,total
+        id,item_id,order_id,status,num,total,user_id
     </sql>
 
     <!-- 实体类属性-->
     <sql id="OrderDetail_insert">
-        #{id},#{itemId},#{orderId},#{status},#{num},#{total}
+        #{id},#{itemId},#{orderId},#{status},#{num},#{total},#{userId}
     </sql>
 
     <!-- 更新结果  -->
@@ -40,13 +42,16 @@
             order_id = #{orderId},
         </if>
         <if test="status != null">
-            status = #{status}
+            status = #{status},
         </if>
         <if test="num != null">
             num = #{num},
         </if>
         <if test="total != null">
             total = #{total},
+        </if>
+        <if test="userId != null">
+            user_id = #{userId},
         </if>
 
     </sql>
@@ -70,6 +75,9 @@
         </if>
         <if test="total != null">
             and total = #{total}
+        </if>
+        <if test="userId != null">
+            and user_id = #{userId}
         </if>
     </sql>
 
