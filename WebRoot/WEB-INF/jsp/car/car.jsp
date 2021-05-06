@@ -221,6 +221,28 @@
             alert("请至少选择一个商品结算");
             return false;
         }
+        //利用弹窗让用户选择是否线下
+        var ifOffline = confirm("是否线下取货");
+        console.log(ifOffline);
+        var offLineFlag;
+        if(ifOffline === true){
+            offLineFlag = 1;
+            //使用ajax方式进行提交，传入flag
+            $.ajax({
+                type:"GET",
+                url:"${ctx}/itemOrder/isOffLine",
+                data:{
+                    offLineFlag:offLineFlag
+                },
+                contentType:"application/json",
+                //获取返回结果，判断各种状态
+                success:function (result) {
+                    if(result.offLine == 1){
+                        alert("您已选择线下取货");
+                    }
+                }
+            });
+        }
         //使用ajax方式进行提交，将商品列表传入
         $.ajax({
             type:"POST",

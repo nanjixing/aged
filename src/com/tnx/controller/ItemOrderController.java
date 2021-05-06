@@ -53,6 +53,8 @@ public class ItemOrderController extends BaseController {
     @Autowired
     private PayService payService;
 
+    private Integer flag = 0;
+
     @RequestMapping("/findBySql")
     public String findBySql(ItemOrder itemOrder, Model model) {
         //分页查询
@@ -87,11 +89,11 @@ public class ItemOrderController extends BaseController {
         //全部订单
         String sql = "select * from item_order where user_id=" + userId + " order by id desc";
         List<ItemOrder> all = itemOrderService.listBySqlReturnEntity(sql);
-        //待发货
+        //待支付
         String sql21 = "select * from item_order where user_id=" + userId + " and status=-1 order by id desc";
         List<ItemOrder> dzf = itemOrderService.listBySqlReturnEntity(sql21);
         //待发货
-        String sql2 = "select * from item_order where user_id=" + userId + " and status=0 order by id desc";
+        String sql2 = "select * from item_order where user_id=" + userId + " and status=0 and item_id !=1 order by id desc";
         List<ItemOrder> dfh = itemOrderService.listBySqlReturnEntity(sql2);
 
         //已取消
@@ -118,6 +120,21 @@ public class ItemOrderController extends BaseController {
 //        }
         return "itemOrder/myOrder";
     }
+
+    @RequestMapping("/isOffLine")
+    @ResponseBody
+    public String isOffLine(Integer offLineFlag){
+        System.out.println("offLineFlag" + offLineFlag);
+        JSONObject jsonObject = new JSONObject();
+        if(offLineFlag == 1){
+            flag = offLineFlag;
+            jsonObject.put("offLine", 1);
+        }else{
+            jsonObject.put("offLine", 0);
+        }
+        return jsonObject.toJSONString();
+    }
+
 
     /**
      * 结算添加订单，前台根据res的值
@@ -168,6 +185,10 @@ public class ItemOrderController extends BaseController {
         order.setTotal(to.setScale(2, BigDecimal.ROUND_HALF_UP).toString());//用bigdecimal设置精确度保留两位小数。
         order.setUserId(userId);
         order.setAddTime(new Date());
+        if(flag == 1){
+            order.setItemId(flag);
+            flag = 0;
+        }
         itemOrderService.insert(order);
         int orderId = order.getId();
         //将订单详情放入orderDetail中，删除购物车，这里是一对多的关系,ids是订单中商品综述，ids为空，list一定为空

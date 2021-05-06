@@ -183,7 +183,7 @@ public class TestController {
         if(load != null){
             ItemOrder itemOrder = new ItemOrder();
             itemOrder.setId(id);
-            itemOrder.setStatus(5);
+            itemOrder.setStatus(3);
             itemOrderService.updateById(itemOrder);
             return "fail";
         }
