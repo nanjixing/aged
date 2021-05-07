@@ -148,7 +148,7 @@ public class LoginController extends BaseController {
             return js.toString();
         }
 //        生成邮箱验证码记录生成时间
-        String code = MailUtils.generatorEmailCode();
+        String code = mailUtils.generatorEmailCode();
         mailUtils.setGeneCodeTime(System.currentTimeMillis());
         mailUtils.setEmail(emailCheck);
         if (code != "")mailUtils.setEmailCode(code);
@@ -158,7 +158,7 @@ public class LoginController extends BaseController {
         }
 //        发送邮件
         try {
-            MailUtils.sendEmail(code,emailCheck);
+            mailUtils.sendEmail(code,emailCheck);
         } catch (MessagingException e) {
             js.put(Constants.GENCODE,2);
             e.printStackTrace();
@@ -190,18 +190,21 @@ public class LoginController extends BaseController {
         }
         if(!emailCode.equals(mailUtils.getEmailCode())){
             model.addAttribute(Constants.TORES_EC_FAIL, 2);
+            System.out.println(mailUtils.getEmailCode());
             return "/login/res";
         }
 //        3.验证手机号是否已注册
         User user1 = new User();
         user1.setPhone(user.getPhone());
         User byEntity = userService.getByEntity(user1);
-        if(byEntity == null){
-
+        if(byEntity != null){
+//        4.手机号已被注册
+            model.addAttribute(Constants.TORES_EC_FAIL, 3);
+            return "login/res";
         }
 //        4.验证成功
         userService.insert(user);
-        model.addAttribute(Constants.TORES_INSERT_SUCCESS, 1);
+        model.addAttribute(Constants.TORES_EC_FAIL, 4);
         return "login/uLogin";
     }
 

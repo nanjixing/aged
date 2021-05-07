@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: xing
@@ -56,5 +57,10 @@
         </div>
     </div>
 </div>
+<c:if test="${tores_ec_fail == 4}">
+    <script type="text/javascript">
+        alert("注册成功");
+    </script>
+</c:if>
 </body>
 </html>

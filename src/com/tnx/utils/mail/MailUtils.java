@@ -26,7 +26,7 @@ public class MailUtils {
      * 生成一个验证码并返回
      * @return
      */
-    public static String generatorEmailCode(){
+    public String generatorEmailCode(){
         //  获取6为随机验证码
         String[] letters = new String[] {
                 "q","w","e","r","t","y","u","i","o","p","a","s","d","f","g","h","j","k","l","z","x","c","v","b","n","m",
@@ -45,7 +45,7 @@ public class MailUtils {
      * @param recipientEmail
      * @throws MessagingException
      */
-    public static void sendEmail(String code, String recipientEmail) throws MessagingException, GeneralSecurityException {
+    public  void sendEmail(String code, String recipientEmail) throws MessagingException, GeneralSecurityException {
         Properties props = new Properties();
         // 开启debug调试
         props.setProperty("mail.debug", "true");

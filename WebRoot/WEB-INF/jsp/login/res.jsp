@@ -68,6 +68,11 @@
         alert("验证码错误");
     </script>
 </c:if>
+<c:if test="${tores_ec_fail == 3}">
+    <script type="text/javascript">
+        alert("手机号已被注册");
+    </script>
+</c:if>
 
 <script type="text/javascript">
 
@@ -108,7 +113,7 @@
             alert("邮箱不能为空");
         }
         $.ajax({
-            type:"POST",
+            type:"GET",
             url:"${ctx}/login/genCode.do",
             data:{
                 "emailCheck":email
