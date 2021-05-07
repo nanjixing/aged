@@ -8,6 +8,7 @@ import com.tnx.service.ItemService;
 import com.tnx.service.ManageService;
 import com.tnx.service.UserService;
 import com.tnx.utils.Constants;
+import com.tnx.utils.login.loginConfig;
 import com.tnx.utils.mail.MailUtils;
 import org.codehaus.jackson.node.ContainerNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -191,8 +192,14 @@ public class LoginController extends BaseController {
             model.addAttribute(Constants.TORES_EC_FAIL, 2);
             return "/login/res";
         }
-//        3.验证成功
+//        3.验证手机号是否已注册
+        User user1 = new User();
+        user1.setPhone(user.getPhone());
+        User byEntity = userService.getByEntity(user1);
+        if(byEntity == null){
 
+        }
+//        4.验证成功
         userService.insert(user);
         model.addAttribute(Constants.TORES_INSERT_SUCCESS, 1);
         return "login/uLogin";
@@ -220,15 +227,39 @@ public class LoginController extends BaseController {
             if(u1 == null){
                 return "redirect:/login/res.action";
             }
+
             request.getSession().setAttribute("role",2);
             request.getSession().setAttribute("userName",u1.getUserName());
             request.getSession().setAttribute("userId",u1.getId());
+            if(!loginConfig.webLogin.containsKey(u1.getId())){
+                loginConfig.webLogin.put(u1.getId(),String.valueOf(request.getSession().hashCode()));
+
+            }else{
+                if(!loginConfig.webLogin.get(u.getId()).equals(String.valueOf(request.getSession().hashCode()))){
+                    loginConfig.webLogin.remove(u.getId());
+
+                }else{
+                    loginConfig.webLogin.put(u.getId(),String.valueOf(request.getSession().hashCode()));
+
+                }
+            }
+
             return "redirect:/login/uIndex.action";
 
         }else{
+//            添加唯一登陆
             request.getSession().setAttribute("role",2);
             request.getSession().setAttribute(Constants.USERNAME,u.getUserName());
             request.getSession().setAttribute(Constants.USERID,u.getId());
+            if(!loginConfig.webLogin.containsKey(u.getId())){
+                loginConfig.webLogin.put(u.getId(),String.valueOf(request.getSession().hashCode()));
+
+            }else{
+                if(!loginConfig.webLogin.get(u.getId()).equals(String.valueOf(request.getSession().hashCode()))){
+                    loginConfig.webLogin.remove(u.getId());
+                    loginConfig.webLogin.put(u.getId(),String.valueOf(request.getSession().hashCode()));
+                }
+            }
             return "redirect:/login/uIndex.action";
         }
     }

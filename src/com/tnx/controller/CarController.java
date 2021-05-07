@@ -7,6 +7,7 @@ import com.tnx.po.Car;
 import com.tnx.service.ItemService;
 import com.tnx.service.CarService;
 import com.tnx.utils.Constants;
+import com.tnx.utils.login.loginConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,6 +51,7 @@ public class CarController extends BaseController {
             js.put(Constants.RES, 0);
             return js.toJSONString();
         }
+
         //保存到购物车
         Integer userId = Integer.valueOf(attribute.toString());
         car.setUserId(userId);

@@ -10,12 +10,14 @@ import com.tnx.service.OrderDetailService;
 import com.tnx.service.PayService;
 import com.tnx.service.UserService;
 import com.tnx.utils.Constants;
+import com.tnx.utils.DateUtil;
 import com.tnx.utils.QRCode.QRCode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -104,7 +106,29 @@ public class TestController {
         }
         return js.toJSONString();
     }
-
+    /**
+     * 登录验证，账户密码
+     * @param formdata
+     * @return
+     */
+    @RequestMapping(value = "/uLogin" ,method = RequestMethod.GET)
+    @ResponseBody
+    public String uLogin(String formdata){
+        JSONObject js = new JSONObject();
+//        验证是否登录成功
+        JSONObject parseObject = JSONObject.parseObject(formdata);
+        String phone = (String) parseObject.get("phone");
+        String phonepass = (String) parseObject.get("phonepass");
+        System.out.println( phone + "---" + phonepass);
+        User user = new User(phone);
+        User byEntity = userService.getByEntity(user);
+        if(byEntity.getPassWord().equals(phonepass)){
+            js.put(Constants.USER_LOGIN_SUCCESS, "success");
+        }else{
+            js.put(Constants.USER_LOGIN_SUCCESS,"fail");
+        }
+        return js.toJSONString();
+    }
     /**
      * 获取订单信息
      * @param phone
@@ -124,11 +148,21 @@ public class TestController {
         if(itemOrders.size() > 0){
             String sql = "select * from item_order where user_id = " + byEntity.getId() +
                     " and item_id = 1 and status = 0 and isDelete = 0";
-//            测试
-//            String sql = "select * from item_order where user_id = " + byEntity.getId();
-
             List<Map<String, Object>> bySql = itemOrderService.listBySqlReturnMap(sql);
-            if(bySql.size() > 0)js.put(Constants.ITEM_ORDERS,bySql);
+//            List<ItemOrder> orderList = itemOrderService.listBySqlReturnEntity(sql);
+//            将时间改为string
+            for (Map map: bySql
+                 ) {
+                map.replace("addTime",map.get("addTime").toString());
+            }
+//            for (ItemOrder item: orderList
+//                 ) {
+//                item.setAddTime(item.getAddTime().toString());
+//            }
+            if(bySql.size() > 0){
+                js.put(Constants.ITEM_ORDERS,bySql);
+//                js.put("orderList",orderList);
+            }
         }else{
             js.put(Constants.ITEM_ORDERS, "暂无订单");
         }
@@ -156,6 +190,7 @@ public class TestController {
                 String qrUrl = QRCode.geneQRCode(byEntity,Constants.URL_HEADER_QRCODE);
                 //4. 解析服务器的url,然后存入到json对象汇总
                 js.put(Constants.ORDER_QRCODE,qrUrl);
+                js.put("title",byEntity.getTitle());
                 //5. 返回json字符串
             } catch (WriterException e) {
                 e.printStackTrace();
@@ -180,6 +215,9 @@ public class TestController {
         System.out.println(js.get("pay_orderid"));
         Integer id = Integer.valueOf(js.get("pay_orderid").toString());
         ItemOrder load = itemOrderService.load(id);
+        if(load.getStatus() == 3){
+            return "yqh";
+        }
         if(load != null){
             ItemOrder itemOrder = new ItemOrder();
             itemOrder.setId(id);

@@ -1,5 +1,7 @@
 package com.tnx.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +39,7 @@ public class ItemOrder implements Serializable {
     /**
      * 购买时间
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd hh-mm")
     private Date addTime;
 
     /**

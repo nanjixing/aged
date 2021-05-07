@@ -32,12 +32,14 @@
     </mvc:annotation-driven>
 <!--    资源路径-->
     <mvc:resources mapping="/resource/**" location="/resource/"/>
-<!--    <mvc:cors>-->
-<!--        <mvc:mapping allow-credentials="true" allowed-headers="Content-Type"-->
-<!--                     allowed-methods="POST, GET, OPTIONS, DELETE, PUT, HEAD"-->
-<!--                     allowed-origins="http://localhost:8082"-->
-<!--                     max-age="3600" path="/**"/>-->
-<!--    </mvc:cors>-->
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/car/*"/>
+            <mvc:mapping path="/comment/*"/>
+            <bean class="com.tnx.filter.LoginCheckInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 	<!--spring mvc的文件上传模块是可插拔的，默认没有启用，只要在 spring mvc 容器中实例化 MultipartResolver 接口的实现类即可，
 	spring mvc 为我们提供了整合了 commons-fileupload 的 CommonsMultipartResolver 解析器，只需实例化该类即可-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
