@@ -1,0 +1,90 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/blank/blank",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "AgedShop",
+				"backgroundColor": "#c6d5c3"
+				
+			}
+		}, {
+			"path": "pages/login/login",
+			"style": {
+				"backgroundColor": "#c6d5c3",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+				
+			}
+			
+			
+
+		}
+
+	    ,{
+            "path" : "pages/orderQRCode/orderQRCode",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+		    "path" : "pages/location/location",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+				"navigationStyle":"custom",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+    ],
+	"globalStyle": {
+		
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "线下扫码",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"backgroundTextStyle": "light",
+		"enablePullDownRefresh": true
+	}
+	,
+	"tabBar": {
+		"color": "#A0522D",
+		"selectedColor": "#B3EE3A",
+		"backgroundColor": "#fff",
+		// 边框颜色
+		"borderStyle": "black",
+		"list": [
+			{
+				"text": "订单信息",
+				"pagePath": "pages/user/user",
+				"iconPath": "static/tabs/message.png",
+				"selectedIconPath": "static/tabs/message-active.png"
+			},
+			{
+				"text": "查看位置",
+				"pagePath": "pages/location/location",
+				"iconPath": "static/tabs/home.png",
+				"selectedIconPath": "static/tabs/home-active.png"
+			}
+			
+			
+		]
+	}
+}
