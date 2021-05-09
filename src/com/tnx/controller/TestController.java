@@ -2,18 +2,19 @@ package com.tnx.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.zxing.WriterException;
+import com.tnx.base.BaseController;
+import com.tnx.po.Item;
 import com.tnx.po.ItemOrder;
 import com.tnx.po.Pay;
 import com.tnx.po.User;
-import com.tnx.service.ItemOrderService;
-import com.tnx.service.OrderDetailService;
-import com.tnx.service.PayService;
-import com.tnx.service.UserService;
+import com.tnx.service.*;
 import com.tnx.utils.Constants;
 import com.tnx.utils.DateUtil;
+import com.tnx.utils.Pager;
 import com.tnx.utils.QRCode.QRCode;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -27,10 +28,11 @@ import java.util.Map;
  * @Author Nanxing Tang
  * @Date 2021--05--01--13:35
  **/
+
 @CrossOrigin(origins = "http://localhost:8082", maxAge = 3600)
 @RestController
 @RequestMapping(value = "/test")
-public class TestController {
+public class TestController extends BaseController {
 
     @Autowired
     private UserService userService;
@@ -43,6 +45,9 @@ public class TestController {
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private ItemService itemService;
 
     private String uCode;
     private String uPhone;
@@ -227,4 +232,88 @@ public class TestController {
         }
         return "fail";
     }
+
+
+    /*------------------------商品展示页面-----------------------*/
+
+    /**
+     * 语音搜索
+     * @param jsonString
+     * @return
+     */
+    @RequestMapping(value = "/shoplist",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String shopList(String jsonString) {
+        JSONObject jsonObject = (JSONObject) JSONObject.parse(jsonString);
+        JSONObject jsReturn = new JSONObject();
+        String condition = jsonObject.get("condition").toString();
+        String sql = "select * from item where isDelete = 0 ";
+
+//        if (!isEmpty(item.getCategoryIdTwo())) {
+//            sql += " and category_id_two = " + item.getCategoryIdTwo();
+//        }
+        if (!isEmpty(condition)) {
+
+            sql += " and name like '%" + condition + "%'";
+        }else{
+            jsReturn.put("condition", "fail");
+        }
+//        if (!isEmpty(item.getPrice())) {
+//            sql += " order by (price + 0) desc";
+//        }
+//        if (!isEmpty(item.getGmNum())) {
+//            sql += " order by gmNum desc";
+//        }
+//        if (!isEmpty(item.getPrice()) && !isEmpty(item.getGmNum())) {
+//            sql += " order by id";
+//        }
+        List<Map<String, Object>> shoplist = itemService.listBySqlReturnMap(sql);
+        if(shoplist.size() > 0){
+            jsReturn.put("shoplist",shoplist);
+        }else{
+            jsReturn.put("shoplist","fail");
+        }
+        return jsReturn.toJSONString();
+    }
+
+    /**
+     * 查看热销商品
+     * @return
+     */
+    @RequestMapping(value = "/gethotgoods",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+     public String getHotGoods(){
+        JSONObject jsonObject = new JSONObject();
+        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where isDelete=0  order by gmNum desc limit 0,10");
+//        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where isDelete=0 and id = 51 order by gmNum ");
+
+        jsonObject.put("hotgoods", rxs);
+        return jsonObject.toJSONString();
+    }
+
+
+    @RequestMapping(value = "/search",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String search(String condition){
+        System.out.println("condition" + condition);
+        JSONObject jsonObject = new JSONObject();
+        char[] chars = condition.toCharArray();
+        int len = chars.length;
+        String sql = "";
+        for(int i= 0; i < len ; i ++){
+            sql +="or name like '%"+chars[i]+"%' ";
+        }
+        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where isDelete=0 and (name like '%"+ condition+"%' " +
+                sql+" )order by gmNum desc ");
+        System.out.println(sql);
+//        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where isDelete=0 and id = 51 order by gmNum ");
+        if(rxs.size() > 0){
+            jsonObject.put("hotgoods", rxs);
+        }else{
+            jsonObject.put("hotgoods", "false");
+        }
+
+        return jsonObject.toJSONString();
+    }
+
 }

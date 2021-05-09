@@ -83,6 +83,7 @@ public class ItemController extends BaseController {
         item.setGmNum(0);
         item.setIsDelete(0);
         item.setScNum(0);
+
         itemService.insert(item);
         return "redirect:/item/findBySql.action";
     }
@@ -101,24 +102,25 @@ public class ItemController extends BaseController {
                 //判断图片名字是否为空防止更新的时候图片没有修改，会导致图片失效
                 if (!"".equals(files[s].getOriginalFilename())) {
                     String n = UUIDUtils.create();
+                    //修改SystemContext.getRealPath()为
                     String path = SystemContext.getRealPath() + "\\resource\\ueditor\\upload\\" + n + files[s].getOriginalFilename();
                     File newFile = new File(path);
                     //通过CommonsMultipartFile的方法直接写文件
                     files[s].transferTo(newFile);
                     if (s == 0) {
-                        item.setUrl1(request.getContextPath() + "\\resource\\ueditor\\upload\\" + n + files[s].getOriginalFilename());
+                        item.setUrl1("http://391661q0s0.wicp.vip"+request.getContextPath() + "/resource/ueditor/upload/" + n + files[s].getOriginalFilename());
                     }
                     if (s == 1) {
-                        item.setUrl2(request.getContextPath() + "\\resource\\ueditor\\upload\\" + n + files[s].getOriginalFilename());
+                        item.setUrl2("http://391661q0s0.wicp.vip" + request.getContextPath() + "/resource/ueditor/upload/" + n + files[s].getOriginalFilename());
                     }
                     if (s == 2) {
-                        item.setUrl3(request.getContextPath() + "\\resource\\ueditor\\upload\\" + n + files[s].getOriginalFilename());
+                        item.setUrl3(request.getContextPath() + "/resource/ueditor/upload/" + n + files[s].getOriginalFilename());
                     }
                     if (s == 3) {
-                        item.setUrl4(request.getContextPath() + "\\resource\\ueditor\\upload\\" + n + files[s].getOriginalFilename());
+                        item.setUrl4(request.getContextPath() + "/resource/ueditor/upload/" + n + files[s].getOriginalFilename());
                     }
                     if (s == 4) {
-                        item.setUrl5(request.getContextPath() + "\\resource\\ueditor\\upload\\" + n + files[s].getOriginalFilename());
+                        item.setUrl5(request.getContextPath() + "/resource/ueditor/upload/" + n + files[s].getOriginalFilename());
                     }
                 }
 

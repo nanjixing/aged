@@ -1,6 +1,7 @@
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\utils\mail\MailUtils.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\utils\pay\AliPay.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\po\CategoryDto.java
+E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\utils\uniapp\WebMvcConfig.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\service\impl\MessageServiceImpl.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\utils\Pager.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\po\Manage.java
@@ -12,6 +13,7 @@ E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\service
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\po\OrderDetail.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\controller\PayController.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\mapper\MessageMapper.java
+E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\utils\login\loginConfig.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\utils\JsonUtil.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\controller\CarController.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\base\BaseServiceImpl.java
@@ -32,6 +34,7 @@ E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\mapper\
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\mapper\PayMapper.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\po\News.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\mapper\OrderDetailMapper.java
+E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\utils\QRCode\QRCode.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\service\impl\ScServiceImpl.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\service\ManageService.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\controller\UserController.java
@@ -48,6 +51,7 @@ E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\service
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\po\Message.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\service\impl\CommentServiceImpl.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\service\impl\ItemCategoryServiceImpl.java
+E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\filter\LoginCheckInterceptor.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\po\Sc.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\service\impl\ItemOrderServiceImpl.java
 E:\360MoveData\Users\xing\Desktop\bishe\shop_fruit\testMaven\src\com\tnx\controller\CommentController.java
