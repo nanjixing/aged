@@ -14,15 +14,15 @@
 					<input class="uni-input" type="number" name="phone" maxlength="11" placeholder="请输入您的手机号"
 						v-model="phoneNumber" number />
 				</view>
-			<!-- 	<view class="uni-form-item uni-column">
+				<!-- 	<view class="uni-form-item uni-column">
 					<view class="title">验证码:</view>
 					<input class="uni-input" name="vercode" placeholder="请输入您的验证码" /><button
 						@click="vercode(phoneNumber)">获取验证码</button>
 				</view> -->
 				<view class="uni-form-item uni-column">
 					<view class="title"> 密码:</view>
-					<input class="uni-input" type="password" name="phonepass"  placeholder="请输入您的密码"
-						v-model="phonePass" number />
+					<input class="uni-input" type="password" name="phonepass" placeholder="请输入您的密码" v-model="phonePass"
+						number />
 				</view>
 				<view class="button">
 					<button type="primary" form-type="submit">登录</button>
@@ -41,7 +41,7 @@
 			return {
 				title: '欢迎使用',
 				phoneNumber: '',
-				phonePass:'',
+				phonePass: '',
 				code: 'fail',
 				urlHeader: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/',
 				tempPhone: ''
@@ -55,10 +55,10 @@
 			// 	uni.navigateTo({
 			// 		url: '/pages/user/user?toUserPhone=' + this.tempPhone
 			// 	});
-				
+
 			// }
 		},
-		
+
 		methods: {
 			// //表单提交,验证码
 			// formSubmit: function(e) {
@@ -101,10 +101,11 @@
 
 			// },
 			//表单提交账户密码
-			formSubmit: function(e) {
+			async formSubmit(e) {
 				var formdata = JSON.stringify(e.detail.value);
 				console.log('form发生了submit事件，携带数据为：' + formdata);
-			
+
+				
 				uni.request({
 					url: this.urlHeader + 'uLogin',
 					data: {
@@ -115,17 +116,17 @@
 						if (res.data.user_login_success == 'success') {
 							//登录成功
 							console.log("登陆成功" + JSON.parse(formdata).phone);
-				
-							
-								//将用户数据写入到本地缓存当中
-								uni.setStorageSync('userPhone',JSON.parse(formdata).phone);
-								console.log("存储成功 " + JSON.parse(formdata).phone)
-							
+
+
+							//将用户数据写入到本地缓存当中
+							uni.setStorageSync('userPhone', JSON.parse(formdata).phone);
+							console.log("存储成功 " + JSON.parse(formdata).phone)
+
 							//跳转到用户信息界面
 							uni.switchTab({
 								url: '/pages/user/user',
 							});
-			
+
 						} else {
 							//登录失败
 							uni.showModal({
@@ -135,9 +136,9 @@
 						}
 					}
 				})
-			
+
 				// }
-			
+
 			},
 			formReset: function(e) {
 				console.log('清空数据')

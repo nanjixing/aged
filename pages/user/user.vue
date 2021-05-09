@@ -2,7 +2,7 @@
 	<view>
 
 		<view class="link">
-			<button class="link_button" type="primary" size="mini" >查看位置</button>
+			<button class="link_button" type="primary" size="mini"  @click="goGoods()">查看商品</button>
 			<button class="link_button" type="primary" size="mini"  @click="getOrders()">查看订单</button>
 			<button class="link_button" type="primary" size="mini"  @click="tuichu()">退出登陆</button>
 		</view>
@@ -52,6 +52,14 @@
 				
 				});
 			},
+			//跳转详情页
+			goGoods(){
+				//跳转到用户信息界面
+				uni.navigateTo({
+					url: '/pages/goods/goods',
+				
+				});
+			},
 			//获取订单信息
 			getOrders() {
 				console.log(this.phone);
@@ -61,7 +69,7 @@
 						phone: this.phone
 					},
 					success(res) {
-						console.log(res);
+						console.log(res.data.itemOrders);
 						if (res.data.itemOrders != "暂无订单") {
 							console.log(res.data.itemOrders);
 							uni.setStorageSync('orders', res.data.itemOrders);
