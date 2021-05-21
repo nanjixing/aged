@@ -71,7 +71,7 @@ public class MailUtils {
 
         // 创建邮件对象
         Message msg = new MimeMessage(session);
-        msg.setSubject("JavaMail测试");
+        msg.setSubject("您的验证码为：");
         // 设置邮件内容
         msg.setText("这是一封由JavaMail发送的邮件！" + code);
         // 设置发件人（账号）

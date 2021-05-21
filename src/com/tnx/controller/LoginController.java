@@ -238,15 +238,13 @@ public class LoginController extends BaseController {
                 loginConfig.webLogin.put(u1.getId(),String.valueOf(request.getSession().hashCode()));
 
             }else{
-                if(!loginConfig.webLogin.get(u.getId()).equals(String.valueOf(request.getSession().hashCode()))){
-                    loginConfig.webLogin.remove(u.getId());
 
-                }else{
-                    loginConfig.webLogin.put(u.getId(),String.valueOf(request.getSession().hashCode()));
+                    if(!loginConfig.webLogin.get(u1.getId()).equals(String.valueOf(request.getSession().hashCode()))){
+                        loginConfig.webLogin.remove(u1.getId());
+                        loginConfig.webLogin.put(u1.getId(),String.valueOf(request.getSession().hashCode()));
 
-                }
+                    }
             }
-
             return "redirect:/login/uIndex.action";
 
         }else{

@@ -28,6 +28,7 @@ public class UeditorController {
     public Map<String,Object> saveFile(@RequestParam(value="upfile",required = false)MultipartFile file) throws IOException {
         Map<String,Object> params = new HashMap<>();
         String n = UUIDUtils.create();
+        System.out.println(SystemContext.getRealPath());
         String path = SystemContext.getRealPath() + "resource\\ueditor\\upload\\" + n + file.getOriginalFilename();
         File newFile = new File(path);
         //通过CommonsMultipartFile的方法直接写文件

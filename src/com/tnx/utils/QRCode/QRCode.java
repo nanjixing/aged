@@ -29,7 +29,8 @@ public class QRCode {
 //        1. 定义一个json字符串
         JSONObject jsonObject = new JSONObject();
 //        2. 给json字符串存值
-        jsonObject.put("pay_sn", pay.getPaySn());
+        if(pay.getPaySn() != null)jsonObject.put("pay_sn", pay.getPaySn());
+        else jsonObject.put("pay_sn", pay.getSn());
         jsonObject.put("pay_info", pay.getInfo());
         jsonObject.put("pay_title", pay.getTitle());
         jsonObject.put("pay_price", pay.getTotalAmount());
@@ -47,7 +48,12 @@ public class QRCode {
 //        生成二维码图片
 //        String filePath = "E:\\360MoveData\\Users\\xing\\Desktop\\bishe\\shop_fruit\\testMaven\\WebRoot\\" + "\\resource\\qrcode\\";
         String filePath = filePathHeader + "resource\\qrcode\\";
-        String fileName = pay.getPaySn() + ".jpg";
+        String fileName;
+        if(pay.getPaySn() != null){
+            fileName = pay.getPaySn() + ".jpg";
+        }else{
+            fileName = pay.getSn() + ".jpg";
+        }
         String returnFile = "";
 //        Path path = FileSystems.getDefault().getPath(filePath,fileName);
         File file = new File(filePath + fileName);

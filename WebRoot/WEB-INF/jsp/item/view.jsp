@@ -69,7 +69,7 @@
             <a href="javascript:void(0)" id="min_s">-</a>
             <input type="text" value="1" readonly id="t_a">
             <a href="javascript:void(0)" id="add_s">+</a>
-            <font class="font14 c_99" style="margin-left: 20px;">库存100</font>
+<%--            <font class="font14 c_99" style="margin-left: 20px;">库存100</font>--%>
             <script>
                 var tr = $("#t_a").val();
                 $("#min_s").click(function () {

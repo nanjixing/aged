@@ -86,6 +86,16 @@
                             <div style="width: 838px;padding-top:30px;padding-bottom: 30px;" class="hidden_yh center_yh tleft">
                                 <font class="font24">总金额</font>
                                 <font class="font24 red">￥${data.total}</font>
+                                <c:if test="${data.itemId==1}">
+                                    <a  class="c_33  font20 onorange right_yh" style="margin-top: 10px;padding-right: 6px;">
+                                        线下取货
+                                    </a>
+                                </c:if>
+                                <c:if test="${data.itemId==0}">
+                                    <a  class="c_33  font20 onorange right_yh" style="margin-top: 10px;padding-right: 6px;">
+                                        线上收货
+                                    </a>
+                                </c:if>
                                 <c:if test="${data.status==-1}">
                                     <a href="${ctx}/itemOrder/qx?id=${data.id}" class="c_33 onHover font20 onorange right_yh" style="margin-top: 10px;padding-right: 6px;">
                                         取消订单
@@ -111,6 +121,7 @@
                                         已收货
                                     </a>
                                 </c:if>
+
                             </div>
                         </div>
                     </c:forEach>

@@ -80,7 +80,7 @@ public class ItemOrderController extends BaseController {
      */
     @RequestMapping("/my")
     public String my(Model model, HttpServletRequest request ,String refund_msg) {
-        //判断是否登录
+        //判断是否登录，这里在支付成功后判断session中没有用户id
         Object attribute = request.getSession().getAttribute(Constants.USERID);
         if (attribute == null) {
             return "redirect:/login/uLogin";

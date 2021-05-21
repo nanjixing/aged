@@ -102,6 +102,7 @@ public class ItemController extends BaseController {
                 //判断图片名字是否为空防止更新的时候图片没有修改，会导致图片失效
                 if (!"".equals(files[s].getOriginalFilename())) {
                     String n = UUIDUtils.create();
+
                     //修改SystemContext.getRealPath()为
                     String path = SystemContext.getRealPath() + "\\resource\\ueditor\\upload\\" + n + files[s].getOriginalFilename();
                     File newFile = new File(path);
@@ -160,7 +161,6 @@ public class ItemController extends BaseController {
     public String exUpdate(Item item, @RequestParam("file") CommonsMultipartFile[] files, HttpServletRequest request) throws IOException {
         itemCommon(item, files, request);
         Item load = itemService.load(item.getId());
-
         if ("".equals(item.getUrl1())) item.setUrl1(load.getUrl1());
         if ("".equals(item.getUrl2())) item.setUrl2(load.getUrl2());
         if ("".equals(item.getUrl3())) item.setUrl3(load.getUrl3());

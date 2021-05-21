@@ -58,9 +58,6 @@
 <ul class="bread">
     <li><a href="{:}" target="right" class="icon-home">首页</a></li>
     <li><a href="#">网站信息</a></li>
-    <li><b>当前语言：</b><span style="color:red">中文</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;切换语言：<a href="#">中文</a>&nbsp;&nbsp;<a href="#">英文</a>
-    </li>
 </ul>
 <%--使用iframe框架自动增加滚轮--%>
 <div class="admin">

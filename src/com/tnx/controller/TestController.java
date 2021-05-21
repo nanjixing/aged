@@ -13,14 +13,14 @@ import com.tnx.utils.DateUtil;
 import com.tnx.utils.Pager;
 import com.tnx.utils.QRCode.QRCode;
 
+import com.tnx.utils.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * @ClassName TestController
@@ -292,6 +292,11 @@ public class TestController extends BaseController {
     }
 
 
+    /**
+     * 语音搜索和普通搜索
+     * @param condition
+     * @return
+     */
     @RequestMapping(value = "/search",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public String search(String condition){
@@ -316,4 +321,89 @@ public class TestController extends BaseController {
         return jsonObject.toJSONString();
     }
 
+    /**
+     * 查询商品轮播图
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/goodpicture",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String goodPicture(Integer id){
+        JSONObject jsonObject = new JSONObject();;
+        if(id != null){
+            String sql = "select url1, url2 from item where id ="+ id;
+            Item item = itemService.getBySqlReturnEntity(sql);
+            if(item != null){
+                List<Map<String,String>> urlList = new ArrayList<>();
+                Map<String,String> map1 = new HashMap<>();
+                Map<String,String> map2 = new HashMap<>();
+                map1.put("src",item.getUrl1());
+                map2.put("src",item.getUrl2());
+                urlList.add(map1);
+                urlList.add(map2);
+                jsonObject.put("goodpicture", urlList);
+            }else{
+                jsonObject.put("goodpicture",null);
+            }
+        }
+        return jsonObject.toJSONString();
+    }
+
+    /**
+     * 查询商品详情
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/gooddetail",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String goodDetail(Integer id){
+        JSONObject jsonObject = new JSONObject();;
+        if(id != null){
+            Item item = itemService.load(id);
+            if(item != null){
+                jsonObject.put("gooddetail",item);
+            }
+        }
+        return jsonObject.toJSONString();
+    }
+
+    @RequestMapping(value = "/buy",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String buy(String phone, String itemId){
+        System.out.println(phone + " " + itemId);
+        User user = new User();
+        Item item = itemService.load(Integer.valueOf(itemId));
+        user.setPhone(phone);
+        //获取电话号码对应的用户
+        User u1 = userService.getByEntity(user);
+        ItemOrder order = new ItemOrder();
+        String orderAndPayCode = getOrderNo();
+        order.setStatus(0);
+        order.setItemId(1);//0表示线上，1表示线下
+        order.setCode(orderAndPayCode);
+        order.setIsDelete(0);
+        order.setTotal(item.getPrice());//用bigdecimal设置精确度保留两位小数。
+        order.setUserId(u1.getId());
+        order.setAddTime(new Date());
+        Pay pay = new Pay();
+        pay.setSn(orderAndPayCode);
+        pay.setTotalAmount(item.getPrice());
+        pay.setInfo(item.getName() + ',');
+        pay.setStatus(1);
+        pay.setTitle(item.getName() + ',');
+
+        pay.setAddTime(new Date());
+        if(u1 != null){
+            itemOrderService.insert(order);
+           String sql = "select * from item_order where code = '"+orderAndPayCode+"'";
+            ItemOrder byEntity = itemOrderService.getBySqlReturnEntity(sql);
+            pay.setItemOrderId(byEntity.getId());
+            payService.insert(pay);
+            return "success";
+        }
+        return "fail";
+    }
+    public static synchronized String getOrderNo() {
+        return UUIDUtils.random().toUpperCase();
+    }
 }
