@@ -1,6 +1,6 @@
 <template>
 	<view>
-
+<Drag @dragClick="dragClick" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
 		<view class="link">
 			<button class="link_button" type="primary" size="mini"  @click="goGoods()">查看商品</button>
 			<button class="link_button" type="primary" size="mini"  @click="getOrders()">查看订单</button>
@@ -44,6 +44,9 @@
 			}
 		},
 		methods: {
+			dragClick(){
+				
+				},
 			tuichu(){
 				uni.removeStorageSync('orders');
 				uni.removeStorageSync('userPhone');

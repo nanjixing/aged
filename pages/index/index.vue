@@ -1,5 +1,7 @@
 <template>
 	<view>
+		<!-- 模板中使用 -->
+		<Drag @dragClick="dragClick" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
 		<view class="content">
 			<image class="logo" src="/static/logo.png"></image>
 			<view class="text-area">
@@ -36,7 +38,9 @@
 </template>
 
 <script>
+	
 	export default {
+		
 		data() {
 			return {
 				title: '欢迎使用',
@@ -100,6 +104,9 @@
 
 
 			// },
+			dragClick(){
+				
+				},
 			//表单提交账户密码
 			async formSubmit(e) {
 				var formdata = JSON.stringify(e.detail.value);
@@ -135,6 +142,7 @@
 							});
 						}
 					}
+					
 				})
 
 				// }

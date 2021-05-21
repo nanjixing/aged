@@ -1,5 +1,6 @@
 <template>
 	<view class="contact">
+		<Drag @dragClick="dragClick" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
 		<view class=" img"></view>
 		<view class="info">
 			<view @click="phone">联系电话：18338783995</view>
@@ -30,6 +31,9 @@
 			}
 		},
 		methods: {
+			dragClick(){
+				
+				},
 			phone(){
 				uni.makePhoneCall({
 					phoneNumber:'18338783995',

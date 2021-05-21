@@ -1,6 +1,6 @@
 <template>
 	<view class="home">
-
+<Drag @dragClick="dragClick" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
 		<!-- 导航区域,这里改为语音搜索框 -->
 		<view class="nav">
 			<!-- 编程式导航，同时位每个导航按钮设置时间处理函数 -->
@@ -14,14 +14,15 @@
 		<view class="hot_goods">
 			<view class="tit">
 				<!-- 搜索 -->
-				<input class="uni-input" type="text" name="condition" placeholder="搜索" :value="resultText" />
+				<input class="uni-input" type="text" name="condition" placeholder="搜索"  v-model="searchValue"/>
 
 			</view>
 			<view class="wrapper">
 				<view>语音识别结果：</view>
 				<view class="result">{{ resultText }}</view>
-				<button @click="startRecord" v-bind:disabled="status">{{ status ? '正在录音中...' : '开始录音' }}</button>
-				<button @click="endRecord" v-bind:disabled="!status">停止录音</button>
+				<button size="mini"  @click="startRecord" v-bind:disabled="status">{{ status ? '正在录音中...' : '开始录音' }}</button>
+				<button size="mini"  @click="endRecord" v-bind:disabled="!status">停止录音</button>
+				<button size="mini"  @click="search(searchValue)" >搜索</button>
 			</view>
 			<!-- goodlist标签时import导入的并且经过component注册 -->
 			<goods-list @goodsItemClick="goGoodsDetail" :goods="goods"></goods-list>
@@ -48,6 +49,7 @@
 				resultText: '', // 语音识别结果
 				rec: '', // recorder实例
 				status: false, // 是否在录制状态
+				searchValue:'',
 				wordList: [],
 				swipers: [],
 				goods: [],
@@ -103,7 +105,7 @@
 					url: this.urlHeader + 'gethotgoods',
 					success(res) {
 						// 将商品把偶才能在数组
-						console.log(res.data.hotgoods)
+						//console.log(res.data.hotgoods)
 						uni.setStorageSync('goods', res.data.hotgoods);
 					}
 				})
@@ -129,6 +131,7 @@
 				try {
 					this.status = true;
 					await this.rec.start();
+					console.log("rec启动成功")
 				} catch (error) {
 					uni.showToast({
 						icon: 'none',
@@ -167,13 +170,12 @@
 					});
 					this.resultText = result.Result;
 					this.wordList = result.WordList;
-					console.log(this.wordList);
 					uni.setStorageSync("stoVoiceResult", this.resultText);
 					var logresult = uni.getStorageSync("stoVoiceResult");
 					console.log(logresult);
 					uni.hideLoading();
 					if (this.resultText != '') {
-						this.search();
+						this.search(this.resultText);
 					} else {
 						uni.showModal({
 							content: '未检测到您说话',
@@ -188,9 +190,10 @@
 				}
 			},
 			//语音搜索
-			search() {
+			search(options) {
+				
 				uni.request({
-					url: this.urlHeader + 'search?condition=' + this.resultText,
+					url: this.urlHeader + 'search?condition=' + options,
 					success(res) {
 						// 将商品把偶才能在数组
 						console.log(res.data.hotgoods)
@@ -289,10 +292,12 @@
 
 	.wrapper {
 		margin: 40rpx;
+		
 	}
 
 	.wrapper button {
 		margin-top: 20rpx;
+		text-align: center;
 	}
 
 	.result {

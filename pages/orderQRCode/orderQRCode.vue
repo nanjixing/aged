@@ -1,12 +1,12 @@
 <template>
 	<view class="content">
+		<Drag @dragClick="dragClick" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
 		<view>商品名字：{{title}}</view>
 		<image v-bind:src="img" class="hw"></image>
 		<view>
 			<button @click="scanQRCode()">
 				扫码
-			</button>
-			
+			</button>	
 		</view>
 	</view>
 </template>
@@ -21,7 +21,9 @@
 			}
 		},
 		methods: {
-			
+			dragClick(){
+				
+				},
 			//扫描二维码
 			scanQRCode: function() {
 				uni.scanCode({

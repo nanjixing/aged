@@ -4,19 +4,23 @@
 		<view class="uni-tab__seat" />
 		<view class="uni-tab__cart-box flex">
 			<view class="flex uni-tab__cart-sub-box">
-				<view v-for="(item,index) in options" :key="index" class="flex uni-tab__cart-button-left uni-tab__shop-cart" @click="onClick(index,item)">
+				<view v-for="(item,index) in options" :key="index"
+					class="flex uni-tab__cart-button-left uni-tab__shop-cart" @click="onClick(index,item)">
 					<view class="uni-tab__icon">
 						<image class="image" :src="item.icon" mode="widthFix" />
 					</view>
 					<text class="uni-tab__text">{{ item.text }}</text>
 					<view class="flex uni-tab__dot-box">
-						<text v-if="item.info" :class="{ 'uni-tab__dots': item.info > 9 }" class="uni-tab__dot ">{{ item.info }}</text>
+						<text v-if="item.info" :class="{ 'uni-tab__dots': item.info > 9 }"
+							class="uni-tab__dot ">{{ item.info }}</text>
 					</view>
 				</view>
 			</view>
 			<view :class="{'uni-tab__right':fill}" class="flex uni-tab__cart-sub-box ">
-				<view v-for="(item,index) in buttonGroup" :key="index" :style="{backgroundColor:item.backgroundColor,color:item.color}"
-				 class="flex uni-tab__cart-button-right" @click="buttonClick(index,item)"><text class="uni-tab__cart-button-right-text">{{ item.text }}</text></view>
+				<view v-for="(item,index) in buttonGroup" :key="index"
+					:style="{backgroundColor:item.backgroundColor,color:item.color}"
+					class="flex uni-tab__cart-button-right" @click="buttonClick(index,item)"><text
+						class="uni-tab__cart-button-right-text">{{ item.text }}</text></view>
 				<!-- <view class="flex uni-tab__cart-button-right uni-tab__color-y ">立即购买</view> -->
 			</view>
 		</view>
@@ -34,7 +38,7 @@
 						icon: 'https://img-cdn-qiniu.dcloud.net.cn/uniapp/uni-ui/goodsnav/dianpu.png',
 						text: '店铺'
 					}, {
-						icon: 'https://img-cdn-qiniu.dcloud.net.cn/uniapp/uni-ui/goodsnav/carts.png',
+						icon: '../static/tab-cart.png',
 						text: '购物车'
 					}]
 				}
@@ -43,16 +47,10 @@
 				type: Array,
 				default () {
 					return [{
-							text: '加入购物车',
-							backgroundColor: '#ff0000',
-							color: '#fff'
-						},
-						{
-							text: '立即购买',
-							backgroundColor: '#ffa200',
-							color: '#fff'
-						}
-					]
+						text: '立即购买',
+						backgroundColor: '#ffa200',
+						color: '#fff'
+					}]
 				}
 			},
 			fill: {
@@ -73,8 +71,12 @@
 				}
 				this.$emit('buttonClick', {
 					index,
-					content: item
+					content: item,
+
 				})
+				if (index == 1) {
+					console.log(index)
+				}
 			}
 		}
 	}

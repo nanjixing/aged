@@ -17,7 +17,7 @@
 <script>
 	export default {
 		// 接受外界传过来的数据，在这个页面使用goods用数据
-		url: 'http://391661q0s0.wicp.vip/test1_war_exploded\\resource\\ueditor\\upload\\1922a980b0c511eb4a502c3d2a4b11cd老年床0.jpg',
+		
 		props: ['goods'],
 		methods: {
 			// 点击跳转详情页界面这是在使用的地方的绑定的事件名goodsItemClick
