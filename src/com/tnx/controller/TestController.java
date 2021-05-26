@@ -10,6 +10,7 @@ import com.tnx.utils.Constants;
 import com.tnx.utils.QRCode.QRCode;
 
 import com.tnx.utils.UUIDUtils;
+import com.tnx.utils.pay.payConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -268,7 +269,7 @@ public class TestController extends BaseController {
     /*------------------------商品展示页面-----------------------*/
 
     /**
-     * 语音搜索
+     * 语音搜索(未使用)
      * @param jsonString
      * @return
      */
@@ -304,6 +305,7 @@ public class TestController extends BaseController {
         }else{
             jsReturn.put("shoplist","fail");
         }
+        System.out.println("===============shoplist:" + jsReturn.toJSONString());
         return jsReturn.toJSONString();
     }
 
@@ -315,13 +317,44 @@ public class TestController extends BaseController {
     @ResponseBody
      public String getHotGoods(){
         JSONObject jsonObject = new JSONObject();
-        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where isDelete=0  order by gmNum desc limit 0,10");
+        List<Item> rxs1 = itemService.listBySqlReturnEntity("select * from item where isDelete=0  order by gmNum desc limit 0,10");
 //        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where isDelete=0 and id = 51 order by gmNum ");
-
+        List<Item> rxs = addUrlHeader(rxs1);
         jsonObject.put("hotgoods", rxs);
+        System.out.println("===============hotgoods:" + jsonObject.toJSONString());
         return jsonObject.toJSONString();
     }
+    /**
+     * 查看热销商品
+     * @return
+     */
+    @RequestMapping(value = "/fenlei",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String fenlei(String condition){
+        System.out.println("fenlei ================" + condition);
+        List<Item> rxs1 = itemService.listBySqlReturnEntity("select * from item where isDelete=0  order by gmNum desc limit 0,10");
+        if("热销商品".equals(condition)){
+            rxs1 = itemService.listBySqlReturnEntity("select * from item where isDelete=0  order by gmNum desc limit 0,10");
+        }
+        if("家居生活".equals(condition)){
+            rxs1 = itemService.listBySqlReturnEntity("select * from item where isDelete=0 and (name like '%床%' or name like '%衣%') limit 0,10");
 
+        }
+        if("健康医疗".equals(condition)){
+            rxs1 = itemService.listBySqlReturnEntity("select * from item where isDelete=0  and name like '%仪%' limit 0,10");
+
+        }
+        if("辅助行走".equals(condition)){
+            rxs1 = itemService.listBySqlReturnEntity("select * from item where isDelete=0  and name like '%助步器%' limit 0,10");
+        }
+        JSONObject jsonObject = new JSONObject();
+//        List<Item> rxs1 = itemService.listBySqlReturnEntity("select * from item where isDelete=0  order by gmNum desc limit 0,10");
+//        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where isDelete=0 and id = 51 order by gmNum ");
+        List<Item> rxs = addUrlHeader(rxs1);
+        jsonObject.put("hotgoods", rxs);
+        System.out.println("===============hotgoods:" + jsonObject.toJSONString());
+        return jsonObject.toJSONString();
+    }
 
     /**
      * 语音搜索和普通搜索
@@ -339,9 +372,11 @@ public class TestController extends BaseController {
         for(int i= 0; i < len ; i ++){
             sql +="or name like '%"+chars[i]+"%' ";
         }
-        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where isDelete=0 and (name like '%"+ condition+"%' " +
+        List<Item> rxs1= itemService.listBySqlReturnEntity("select * from item where isDelete=0 and (name like '%"+ condition+"%' " +
                 sql+" )order by gmNum desc ");
-        System.out.println(sql);
+        List<Item> rxs = addUrlHeader(rxs1);
+        jsonObject.put("hotgoods", rxs);
+        System.out.println("===============search:" + jsonObject.toJSONString());
 //        List<Item> rxs = itemService.listBySqlReturnEntity("select * from item where isDelete=0 and id = 51 order by gmNum ");
         if(rxs.size() > 0){
             jsonObject.put("hotgoods", rxs);
@@ -368,8 +403,8 @@ public class TestController extends BaseController {
                 List<Map<String,String>> urlList = new ArrayList<>();
                 Map<String,String> map1 = new HashMap<>();
                 Map<String,String> map2 = new HashMap<>();
-                map1.put("src",item.getUrl1());
-                map2.put("src",item.getUrl2());
+                map1.put("src", payConstants.urlHeader + item.getUrl1());
+                map2.put("src",payConstants.urlHeader +item.getUrl2());
                 urlList.add(map1);
                 urlList.add(map2);
                 jsonObject.put("goodpicture", urlList);
@@ -391,7 +426,10 @@ public class TestController extends BaseController {
         JSONObject jsonObject = new JSONObject();;
         if(id != null){
             Item item = itemService.load(id);
+
             if(item != null){
+                item.setUrl1(payConstants.urlHeader + item.getUrl1());
+                item.setUrl2(payConstants.urlHeader + item.getUrl2());
                 jsonObject.put("gooddetail",item);
             }
         }
@@ -496,6 +534,10 @@ public class TestController extends BaseController {
             if(item!= null){
                 sc.setItemId(item.getId());
             }
+            Sc scByEntity = scService.getByEntity(sc);
+            if(scByEntity != null){
+                return "ysc";
+            }
             int insert = scService.insert(sc);
             if(insert == 0){
                 return "fail";
@@ -522,10 +564,15 @@ public class TestController extends BaseController {
         User u1 = userService.getByEntity(user);
         String sql = "select * from sc where user_id="+u1.getId();
         List<Sc> scs = scService.listBySqlReturnEntity(sql);
+
         if(scs.size() > 0){
             List<Item> list = new ArrayList<>();
+
             for(Sc sc: scs){
-                list.add(itemService.load(sc.getItemId()));
+                Item load = itemService.load(sc.getItemId());
+                load.setUrl1(payConstants.urlHeader + load.getUrl1());
+                load.setUrl2(payConstants.urlHeader + load.getUrl2());
+                list.add(load);
             }
             jsonObject.put("scgoods",list);
             return jsonObject.toJSONString();
@@ -553,6 +600,21 @@ public class TestController extends BaseController {
         }
         return "fail";
     }
+
+    /**
+     * 添加图片地址头
+     * @param list
+     * @return
+     */
+    private List<Item> addUrlHeader(List<Item> list){
+        for (Item item:list
+             ) {
+            item.setUrl1(payConstants.urlHeader + item.getUrl1());
+            item.setUrl2(payConstants.urlHeader + item.getUrl2());
+        }
+        return list;
+    }
+
     //生成订单唯一UUID
     public static synchronized String getOrderNo() {
         return UUIDUtils.random().toUpperCase();

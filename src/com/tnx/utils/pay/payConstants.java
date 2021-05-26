@@ -7,5 +7,6 @@ package com.tnx.utils.pay;
  * @Date 2021--05--26--10:56
  **/
 public class payConstants {
-    public static final String urlHeader = "http://391661q0s0.wicp.vip";
+//    public static final String urlHeader = "http://391661q0s0.wicp.vip";
+    public static final String urlHeader = "http://nanjixing11.natapp1.cc";
 }

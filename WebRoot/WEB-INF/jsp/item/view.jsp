@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>首页</title>
+    <title>老年用品销售平台</title>
     <link type="text/css" rel="stylesheet" href="${ctx}/resource/user/css/style.css">
     <script src="${ctx}/resource/user/js/jquery-1.8.3.min.js"></script>
     <script src="${ctx}/resource/user/js/jquery.luara.0.0.1.min.js"></script>
@@ -19,7 +19,7 @@
         <div class="left_yh font16" id="pageNav">
             <a href="${ctx}/login/uIndex">首页</a>
             <a href="${ctx}/news/list">公告</a>
-            <a href="${ctx}/message/add">留言</a>
+
         </div>
     </div>
 </div>
@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-    <div class="left_yh" style="width: 486px;height: 420px;margin-left: 42px;">
+    <div class="left_yh" style="width: 500px;height: 420px;margin-left: 42px;">
         <h3 class="font20 font100">${obj.name}</h3>
         <p class="font16 c_66" style="margin-top:25px;">
             <font style="margin-right: 20px;">价格：</font>

@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>首页</title>
+    <title>注册</title>
     <link type="text/css" rel="stylesheet" href="${ctx}/resource/user/css/style.css">
     <script src="${ctx}/resource/user/js/jquery-1.8.3.min.js"></script>
     <script src="${ctx}/resource/user/js/jquery.luara.0.0.1.min.js"></script>

@@ -8,6 +8,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.tnx.po.Pay;
+import com.tnx.utils.pay.payConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +69,7 @@ public class QRCode {
                 System.out.println("文件删除失败！");
             }
         }
-        returnFile +="http://391661q0s0.wicp.vip/test1_war_exploded/resource/qrcode/" + fileName;
+        returnFile += payConstants.urlHeader + "/test1_war_exploded/resource/qrcode/" + fileName;
 
         return returnFile;
     }

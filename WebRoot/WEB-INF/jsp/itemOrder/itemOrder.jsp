@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>管理员后台</title>
+    <title>老年用品销售平台</title>
     <link rel="stylesheet" href="${ctx}/resource/css/pintuer.css">
     <link rel="stylesheet" href="${ctx}/resource/css/admin.css">
     <script src="${ctx}/resource/js/jquery.js"></script>

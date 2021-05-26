@@ -109,10 +109,10 @@ public class ItemController extends BaseController {
                     //通过CommonsMultipartFile的方法直接写文件
                     files[s].transferTo(newFile);
                     if (s == 0) {
-                        item.setUrl1("http://391661q0s0.wicp.vip"+request.getContextPath() + "/resource/ueditor/upload/" + n + files[s].getOriginalFilename());
+                        item.setUrl1(request.getContextPath() + "/resource/ueditor/upload/" + n + files[s].getOriginalFilename());
                     }
                     if (s == 1) {
-                        item.setUrl2("http://391661q0s0.wicp.vip" + request.getContextPath() + "/resource/ueditor/upload/" + n + files[s].getOriginalFilename());
+                        item.setUrl2(request.getContextPath() + "/resource/ueditor/upload/" + n + files[s].getOriginalFilename());
                     }
                     if (s == 2) {
                         item.setUrl3(request.getContextPath() + "/resource/ueditor/upload/" + n + files[s].getOriginalFilename());
