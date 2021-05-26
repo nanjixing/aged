@@ -17,7 +17,7 @@
 			return {
 				img: '',
 				title:'',
-				urlHeader: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/'
+				urlHeader: this.uH+'/test1_war_exploded/test/'
 			}
 		},
 		methods: {
@@ -53,6 +53,11 @@
 								}else if(res.data == "yqh"){
 									uni.showModal({
 										content: '该商品已被取货',
+										showCancel: true
+									})
+								}else if(res.data == "yqx"){
+									uni.showModal({
+										content: '该商品已取消',
 										showCancel: true
 									})
 								}

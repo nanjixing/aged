@@ -47,7 +47,7 @@
 				phoneNumber: '',
 				phonePass: '',
 				code: 'fail',
-				urlHeader: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/',
+				urlHeader: this.uH+'/test1_war_exploded/test/',
 				tempPhone: ''
 			}
 		},
@@ -64,6 +64,9 @@
 		},
 
 		methods: {
+			dragClick() {
+			
+			},
 			// //表单提交,验证码
 			// formSubmit: function(e) {
 			// 	var formdata = JSON.stringify(e.detail.value);

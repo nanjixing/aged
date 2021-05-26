@@ -3,7 +3,7 @@
 		<Drag @dragClick="dragClick" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
 		<!-- 详情轮播图 indicator-dots显示轮播点-->
 		<swiper indicator-dots>
-			<swiper-item v-for="(item,index) in swipers" :key="index">
+			<swiper-item v-for="(item,key) in swipers" :key="key">
 				<image :src="item.src"></image>
 			</swiper-item>
 		</swiper>
@@ -44,7 +44,6 @@
 	export default {
 		data() {
 			return {
-				see: false,
 				id: 0,
 				swipers: [],
 				info: {},
@@ -58,11 +57,8 @@
 				autoplay: true,
 				interval: 2000,
 				duration: 500,
-				buttonGroup: [{
-						text: '收藏',
-						backgroundColor: '#ff0000',
-						color: '#fff'
-					},
+				buttonGroup: [
+					
 
 					{
 						text: '立即购买',
@@ -83,12 +79,12 @@
 					success:(res)=> {
 						if (res.data.goodpicture != undefined) {
 
-							uni.setStorageSync("goodpicture", res.data.goodpicture)
-							this.swipers = uni.getStorageSync("goodpicture")
+							uni.setStorageSync("goodpicture1", res.data.goodpicture)
+							this.swipers = uni.getStorageSync("goodpicture1")
 						}
 					}
 				})
-
+				
 
 			},
 			//获取详情信息
@@ -97,21 +93,26 @@
 					url: this.urlHeader + 'gooddetail?id=' + options,
 					success:(res)=> {
 						if (res.data.gooddetail != undefined) {
-							uni.setStorageSync("gooddetail", res.data.gooddetail)
+							uni.setStorageSync("gooddetail1", res.data.gooddetail)
 							console.log(res.data.gooddetail)
-							this.info = uni.getStorageSync("gooddetail")
-
+							this.info = uni.getStorageSync("gooddetail1")
 						}
 					}
-
 				})
-
-
-
+				
 			},
-
+			// // 获取详情内容
+			// async getDetailContent() {
+			// 	const res = await this.$myRuquest({
+			// 		url: '/api/goods/getdesc/' + this.id
+			// 	})
+			// 	this.content = res.data.message[0].content
+			// },
 			onClick(e) {
-
+				// uni.showToast({
+				// 	title: `点击${e.content.text}`,
+				// 	icon: 'none'
+				// })
 				console.log('客服')
 				uni.makePhoneCall({
 					phoneNumber: '18338783995',
@@ -119,34 +120,23 @@
 				})
 			},
 			buttonClick(e) {
-				uni.setStorageSync('itemid', e)
+				uni.setStorageSync('itemid',e)
 
 			}
 		},
 		//接受传页面的id参数
 		onLoad(options) {
 			//获取上一个页面传递的id
-
-			this.id = uni.getStorageSync('itid')
-
-			// 获取详情内容
-			//this.getDetailContent()
-
-		},
-		onShow() {
-
-			console.log(this.id)
+			console.log(options.id)
+			this.id = options.id
 
 			// 获取轮播图
 			this.getSwipers(this.id)
 
 			// 获取详情
 			this.getDetailInfo(this.id)
-			//this.see = true;
-
-		},
-		onHide() {
-
+			// 获取详情内容
+			//this.getDetailContent()
 		},
 		//注册导航组件
 		components: {

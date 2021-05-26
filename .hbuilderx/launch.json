@@ -4,7 +4,7 @@
     "configurations": [{
      	"app-plus" : 
      	{
-     		"launchtype" : "remote"
+     		"launchtype" : "local"
      	},
      	"default" : 
      	{
@@ -12,7 +12,7 @@
      	},
      	"h5" : 
      	{
-     		"launchtype" : "local"
+     		"launchtype" : "remote"
      	},
      	"type" : "uniCloud"
      }

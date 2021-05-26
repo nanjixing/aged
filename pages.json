@@ -80,6 +80,36 @@
             }
             
         }
+        ,{
+            "path" : "pages/userinfo/userinfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+				
+				
+            }
+            
+        }
+        ,{
+            "path" : "pages/sc/sc",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+       
+        ,{
+            "path" : "pages/goods-detail1/goods-detail1",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		
@@ -101,14 +131,26 @@
 			{
 				"text": "订单信息",
 				"pagePath": "pages/user/user",
-				"iconPath": "static/tabs/message.png",
-				"selectedIconPath": "static/tabs/message-active.png"
+				"iconPath": "static/tabs/xiangqing.png",
+				"selectedIconPath": "static/tabs/xiangqing-active.png"
 			},
 			{
 				"text": "查看位置",
 				"pagePath": "pages/location/location",
-				"iconPath": "static/tabs/home.png",
-				"selectedIconPath": "static/tabs/home-active.png"
+				"iconPath": "static/tabs/wz.png",
+				"selectedIconPath": "static/tabs/weizhi.png"
+			},
+			{
+				"text": "我的收藏",
+				"pagePath": "pages/sc/sc",
+				"iconPath": "static/tabs/sc.png",
+				"selectedIconPath": "static/tabs/sc-active.png"
+			},
+			{
+				"text": "个人信息",
+				"pagePath": "pages/userinfo/userinfo",
+				"iconPath": "static/tab-user.png",
+				"selectedIconPath": "static/tabs/user-active.png"
 			}
 			
 			

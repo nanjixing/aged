@@ -1,6 +1,6 @@
 <template>
 	<view class="home">
-<Drag @dragClick="dragClick" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
+		<Drag @dragClick="dragClick()" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
 		<!-- 导航区域,这里改为语音搜索框 -->
 		<view class="nav">
 			<!-- 编程式导航，同时位每个导航按钮设置时间处理函数 -->
@@ -14,15 +14,16 @@
 		<view class="hot_goods">
 			<view class="tit">
 				<!-- 搜索 -->
-				<input class="uni-input" type="text" name="condition" placeholder="搜索"  v-model="searchValue"/>
+				<input class="uni-input" type="text" name="condition" placeholder="搜索" v-model="searchValue" />
 
 			</view>
 			<view class="wrapper">
 				<view>语音识别结果：</view>
 				<view class="result">{{ resultText }}</view>
-				<button size="mini"  @click="startRecord" v-bind:disabled="status">{{ status ? '正在录音中...' : '开始录音' }}</button>
-				<button size="mini"  @click="endRecord" v-bind:disabled="!status">停止录音</button>
-				<button size="mini"  @click="search(searchValue)" >搜索</button>
+				<button size="mini" @click="startRecord"
+					v-bind:disabled="status">{{ status ? '正在录音中...' : '开始录音' }}</button>
+				<button size="mini" @click="endRecord" v-bind:disabled="!status">停止录音</button>
+				<button size="mini" @click="search(searchValue)">搜索</button>
 			</view>
 			<!-- goodlist标签时import导入的并且经过component注册 -->
 			<goods-list @goodsItemClick="goGoodsDetail" :goods="goods"></goods-list>
@@ -45,33 +46,33 @@
 	export default {
 		data() {
 			return {
-				urlHeader: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/',
+				urlHeader: this.uH+'/test1_war_exploded/test/',
 				resultText: '', // 语音识别结果
 				rec: '', // recorder实例
 				status: false, // 是否在录制状态
-				searchValue:'',
+				searchValue: '',
 				wordList: [],
 				swipers: [],
 				goods: [],
 				navs: [{
 						icon: 'iconfont icon-ziyuan',
-						title: '',
+						title: '热销商品',
 						path: '/pages/goods/goods'
 					},
 					{
-						icon: 'iconfont icon-guanyuwomen',
-						title: '',
-						path: '/pages/contact/contact'
+						icon: 'iconfont icon-ziyuan',
+						title: '家居生活',
+						path: '/pages/goods/goods'
 					},
 					{
-						icon: 'iconfont icon-tupian',
-						title: '',
-						path: '/pages/pics/pics'
+						icon: 'iconfont icon-ziyuan',
+						title: '健康医疗',
+						path: '/pages/goods/goods'
 					},
 					{
-						icon: 'iconfont icon-shipin',
-						title: '',
-						path: '/pages/videos/videos'
+						icon: 'iconfont icon-ziyuan',
+						title: '辅助行走',
+						path: '/pages/goods/goods'
 					}
 				]
 			}
@@ -89,6 +90,9 @@
 			"goods-list": goodsList
 		},
 		methods: {
+			dragClick() {
+			
+			},
 			// 获取轮播图的数据，写箭头函数，不然不能获取this。swipers
 			// async getSwipers () {
 			// 	console.log('获取轮播图路径')
@@ -103,9 +107,9 @@
 			getHotGoods() {
 				uni.request({
 					url: this.urlHeader + 'gethotgoods',
-					success(res) {
+					success:(res)=> {
 						// 将商品把偶才能在数组
-						//console.log(res.data.hotgoods)
+						console.log(res)
 						uni.setStorageSync('goods', res.data.hotgoods);
 					}
 				})
@@ -122,8 +126,10 @@
 			},
 			// 导航到商品详情页,子组件先将id传给父组件，然后这个id是父传过来的
 			goGoodsDetail(id) {
+				uni.setStorageSync('itid',id)
+				
 				uni.navigateTo({
-					url: '/pages/goods-detail/goods-detail?id=' + id
+					url: '/pages/goods-detail/goods-detail'
 				})
 			},
 			// 开始录音
@@ -191,18 +197,18 @@
 			},
 			//语音搜索
 			search(options) {
-				
+
 				uni.request({
 					url: this.urlHeader + 'search?condition=' + options,
 					success(res) {
 						// 将商品把偶才能在数组
 						console.log(res.data.hotgoods)
-						if (res.data.hotgoods != undefined && res.data.hotgoods!= 'false') {
+						if (res.data.hotgoods != undefined && res.data.hotgoods != 'false') {
 							uni.setStorageSync('goods', res.data.hotgoods);
 							//刷新一下
 							uni.navigateTo({
 								url: '/pages/goods/goods',
-							
+
 							});
 						} else {
 							uni.showModal({
@@ -215,7 +221,7 @@
 				})
 				this.goods = uni.getStorageSync('goods');
 			}
-			
+
 		}
 	}
 </script>
@@ -292,7 +298,7 @@
 
 	.wrapper {
 		margin: 40rpx;
-		
+
 	}
 
 	.wrapper button {

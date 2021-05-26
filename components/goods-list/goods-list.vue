@@ -4,12 +4,14 @@
 			
 			<image :src="item.url1"></image>
 			<view class="price">
-				<text>￥{{item.price}}</text>
+				<text>￥{{item.price * item.zk*0.1}}</text>
 				<text>￥{{item.price}}</text>
 			</view>
 			<view class="name">
-				{{item.name}}
+				<text>{{item.name}}</text>
+				
 			</view>
+			
 		</view>
 	</view>
 </template>

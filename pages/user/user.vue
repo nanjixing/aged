@@ -1,31 +1,33 @@
 <template>
 	<view>
-<Drag @dragClick="dragClick" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
+		<Drag @dragClick="dragClick()" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
 		<view class="link">
-			<button class="link_button" type="primary" size="mini"  @click="goGoods()">查看商品</button>
-			<button class="link_button" type="primary" size="mini"  @click="getOrders()">查看订单</button>
-			<button class="link_button" type="primary" size="mini"  @click="tuichu()">退出登陆</button>
+			<button class="link_button" type="primary" size="mini" @click="goGoods()">查看商品</button>
+			<button class="link_button" type="primary" size="mini" @click="getOrders()">查看订单</button>
+			<button class="link_button" type="primary" size="mini" @click="tuichu()">退出登陆</button>
 		</view>
 
 
-		<list>
-			<cell v-for="(value,key) in orderArr"  :key="key" class="uni-flex uni-column">
-
-				<cell>
+		<view>
+			<view v-for="(value,key) in orderArr" :key="key" class="uni-flex uni-column">
+				<view>
 					<!-- <input v-model="orderid" v-bind:value="a" disabled="true" v-show="true" /> -->
 					<view style="margin-left: 50rpx;">订单号：{{value.code}}</view>
 					<view style="height: 10rpx;"></view>
 					<view style="margin-left: 50rpx;">下单时间：{{value.addTime}}</view>
-					<view >
-						<label style=" margin-left: 50rpx;">总价：{{value.total}} 元   </label>
-						
-						<label class="order" @click="getOrderDetail(value.id)" style="float: right; margin-right: 50rpx;border: #007AFF; border-radius: 10rpx;">扫码取货</label>
+					<view>
+						<label style=" margin-left: 50rpx;">商品名：{{value.info}} 元</label>
+						<label style=" margin-left: 10rpx;">收货人：{{value.realName}} </label>
+					</view>
+					<view>
+						<label style=" margin-left: 50rpx;">总价：{{value.total}} 元 </label>
+						<label class="order" @click="getOrderDetail(value.id)"
+							style="float: right; margin-right: 50rpx;border: #007AFF; border-radius: 10rpx;">扫码取货</label>
 					</view>
 					<view class="line"></view>
-				</cell>
-			</cell>
-		</list>
-
+				</view>
+			</view>
+		</view>
 
 	</view>
 </template>
@@ -36,31 +38,32 @@
 			return {
 				tempPhone: '',
 				phone: '',
-				urlHeader: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/',
+				urlHeader: this.uH+'/test1_war_exploded/test/',
 				orderArr: [],
 				orderid: ''
+
 
 
 			}
 		},
 		methods: {
-			dragClick(){
-				
-				},
-			tuichu(){
+			dragClick() {
+
+			},
+			tuichu() {
 				uni.removeStorageSync('orders');
 				uni.removeStorageSync('userPhone');
 				uni.navigateTo({
 					url: '/pages/index/index',
-				
+
 				});
 			},
 			//跳转详情页
-			goGoods(){
+			goGoods() {
 				//跳转到用户信息界面
 				uni.navigateTo({
 					url: '/pages/goods/goods',
-				
+
 				});
 			},
 			//获取订单信息
@@ -71,21 +74,21 @@
 					data: {
 						phone: this.phone
 					},
-					success(res) {
-						console.log(res.data.itemOrders);
+					success:(res)=> {
+						//console.log(res);
 						if (res.data.itemOrders != "暂无订单") {
-							console.log(res.data.itemOrders);
 							uni.setStorageSync('orders', res.data.itemOrders);
+						    this.orderArr = uni.getStorageSync('orders');
 						}
+
 					}
 				});
-				this.orderArr = uni.getStorageSync('orders');
-				console.log(this.orderArr);
-
+				
+				//console.log(this.orderArr);
 			},
 			// 查看订单详情二维码
 			getOrderDetail(id) {
-				
+
 				console.log(id);
 				uni.request({
 					url: this.urlHeader + 'uOrderDetail',
@@ -115,10 +118,10 @@
 		},
 		onLoad() {
 			console.log(uni.getStorageSync('userPhone'));
-			if(uni.getStorageSync('userPhone') == null){
+			if (uni.getStorageSync('userPhone') == null) {
 				uni.navigateTo({
 					url: '/pages/index/index',
-				
+
 				});
 			}
 
@@ -126,16 +129,16 @@
 		onShow() {
 			var userPhone = uni.getStorageSync('userPhone');
 			console.log(userPhone);
-			if(userPhone == ''){
+			if (userPhone == '') {
 				uni.navigateTo({
 					url: '/pages/index/index',
-				
+
 				});
 			}
 			this.phone = userPhone;
 			console.log(this.phone)
-			
-			
+
+
 		}
 
 	}
@@ -248,19 +251,19 @@
 		margin-top: 20rpx;
 		margin-bottom: 20rpx; //上下设置间隔
 	}
-	
-	.order{
+
+	.order {
 		background-color: #75a0aa;
 	}
-	/* 横线 */
-	.line{
-	  float:right;
-	  width: 100%;
-	  height: 1px;
-	  margin-top: 0.5em;
-	  background:#d4c4c4;
-	  position: relative;
-	  text-align: center;
-	}
 
+	/* 横线 */
+	.line {
+		float: right;
+		width: 100%;
+		height: 1px;
+		margin-top: 0.5em;
+		background: #d4c4c4;
+		position: relative;
+		text-align: center;
+	}
 </style>

@@ -46,7 +46,13 @@
 			buttonGroup: {
 				type: Array,
 				default () {
-					return [{
+					return [
+						{
+							text: '收藏',
+							backgroundColor: '#ff0000',
+							color: '#fff'
+						},
+						{
 						text: '立即购买',
 						backgroundColor: '#ffa200',
 						color: '#fff'
@@ -74,8 +80,77 @@
 					content: item,
 
 				})
+				if (index == 0) {
+					var itemId = uni.getStorageSync('itemid')
+					var phone = uni.getStorageSync('userPhone')
+					if (phone == null) {
+						uni.showModal({
+							content: '请先登录',
+							showCancel: true
+						});
+						uni.navigateTo({
+							url: '/pages/index/index',
+						
+						});
+					} else {
+						console.log(phone + ' ' + itemId)
+						uni.request({
+							url: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/sc',
+							data: {
+								phone: phone,
+								itemId: itemId
+							},
+							success(res) {
+								
+								if (res.data == 'success') {
+									console.log(res.data)
+									uni.showModal({
+										content: '收藏成功,可在收藏中查看',
+										showCancel: true
+									});
+									
+								}
+							}
+						})
+					}
+				}
 				if (index == 1) {
-					console.log(index)
+					var itemId = uni.getStorageSync('itemid')
+					console.log(itemId)
+					//立即购买按钮
+					
+					var phone = uni.getStorageSync('userPhone')
+					if (phone == null) {
+						uni.showModal({
+							content: '请先登录',
+							showCancel: true
+						});
+						uni.navigateTo({
+							url: '/pages/index/index',
+						
+						});
+					} else {
+						
+						console.log(phone + ' ' + itemId)
+						uni.request({
+							url: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/buy',
+							data: {
+								phone: phone,
+								itemId: itemId
+							},
+							success(res) {
+								console.log(res);
+								if (res.data == 'success') {
+									console.log(res.data)
+									uni.showModal({
+										content: '购买成功,可在我的订单中查看',
+										showCancel: true
+									});
+									
+								}
+							}
+						})
+					}
 				}
 			}
 		}

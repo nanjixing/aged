@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<Drag @dragClick="dragClick" creatTop="500" creatLeft="280" image="" imageWidth="84%"></Drag>
 	<view class="content">
 		<image class="logo" src="/static/logo.png"></image>
 		<view class="text-area">
@@ -33,6 +34,9 @@
 
 		},
 		methods: {
+			dragClick() {
+			
+			},
 			formSubmit: function(e) {
 				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
 				var formdata = e.detail.value
