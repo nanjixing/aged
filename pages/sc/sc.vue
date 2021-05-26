@@ -106,7 +106,7 @@
 					})
 				} else {
 					uni.request({
-						url: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/qxsc',
+						url: this.urlHeader + 'qxsc',
 						data: {
 							itemId: id,
 							phone:phone

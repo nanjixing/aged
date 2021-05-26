@@ -64,7 +64,7 @@
 								
 							}
 						})
-						console.log('条码内容：' + JSON.stringify(res.result));
+						//console.log('条码内容：' + JSON.stringify(res.result));
 						
 					}
 					

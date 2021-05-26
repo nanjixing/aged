@@ -95,7 +95,8 @@
 					} else {
 						console.log(phone + ' ' + itemId)
 						uni.request({
-							url: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/sc',
+							// url: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/sc',
+							url:this.uH+'/test1_war_exploded/test/sc',
 							data: {
 								phone: phone,
 								itemId: itemId
@@ -109,6 +110,11 @@
 										showCancel: true
 									});
 									
+								}else if(res.data == 'ysc'){
+									uni.showModal({
+										content: '该商品已收藏',
+										showCancel: true
+									});
 								}
 							}
 						})
@@ -133,7 +139,7 @@
 						
 						console.log(phone + ' ' + itemId)
 						uni.request({
-							url: 'http://391661q0s0.wicp.vip/test1_war_exploded/test/buy',
+							url: this.uH+'/test1_war_exploded/test/buy',
 							data: {
 								phone: phone,
 								itemId: itemId

@@ -6,7 +6,9 @@ import Drag from "@/components/beyondGod-drag/beyoundGod-drag.vue"
 import api from './util/api.js'
 
 // Vue.prototype.$myRuquest = myRequest
-Vue.prototype.uH = 'http://391661q0s0.wicp.vip'
+// Vue.prototype.uH = 'http://391661q0s0.wicp.vip'
+
+Vue.prototype.uH = 'http://nanjixing11.natapp1.cc'
 Vue.config.productionTip = false
 
 Vue.component('Drag', Drag)

@@ -4,7 +4,7 @@
 		<!-- 导航区域,这里改为语音搜索框 -->
 		<view class="nav">
 			<!-- 编程式导航，同时位每个导航按钮设置时间处理函数 -->
-			<view class="nav_item" v-for="(item,index) in navs" :key="index" @click="navItemClick(item.path)">
+			<view class="nav_item" v-for="(item,index) in navs" :key="index" @click="navItemClick(item.title)">
 				<!-- class也是用v-bind绑定指定的样式，可以用你来全局改变字体颜色 -->
 				<view :class="item.icon"></view>
 				<text>{{item.title}}</text>
@@ -109,20 +109,43 @@
 					url: this.urlHeader + 'gethotgoods',
 					success:(res)=> {
 						// 将商品把偶才能在数组
-						console.log(res)
+						//console.log(res)
 						uni.setStorageSync('goods', res.data.hotgoods);
+						this.goods = uni.getStorageSync('goods');
 					}
 				})
-				this.goods = uni.getStorageSync('goods');
+				
 
 
 			},
 			// 每个导航按钮点击的处理函数
-			navItemClick(url) {
-				console.log(url)
-				uni.navigateTo({
-					url
-				})
+			navItemClick(title) {
+				if("热销商品"==title){
+					
+				}else{
+					uni.request({
+						url: this.urlHeader + 'fenlei',
+						data:{
+							condition:title
+						},
+						success:(res)=> {
+							// 将商品把偶才能在数组
+							console.log(res.data.hotgoods)
+							if (res.data.hotgoods != undefined) {
+								uni.setStorageSync('goods', res.data.hotgoods);
+								this.goods = uni.getStorageSync('goods');
+								
+							} else {
+								uni.showModal({
+									content: '此分类下没有商品',
+									showCancel: true
+								});
+							}
+							
+						}
+					})
+					
+				}
 			},
 			// 导航到商品详情页,子组件先将id传给父组件，然后这个id是父传过来的
 			goGoodsDetail(id) {
@@ -200,16 +223,12 @@
 
 				uni.request({
 					url: this.urlHeader + 'search?condition=' + options,
-					success(res) {
+					success:(res)=> {
 						// 将商品把偶才能在数组
 						console.log(res.data.hotgoods)
 						if (res.data.hotgoods != undefined && res.data.hotgoods != 'false') {
 							uni.setStorageSync('goods', res.data.hotgoods);
-							//刷新一下
-							uni.navigateTo({
-								url: '/pages/goods/goods',
-
-							});
+							this.goods = uni.getStorageSync('goods');
 						} else {
 							uni.showModal({
 								content: '未找到您说的商品，请再试一次',
@@ -218,10 +237,8 @@
 						}
 
 					}
-				})
-				this.goods = uni.getStorageSync('goods');
+				})				
 			}
-
 		}
 	}
 </script>
