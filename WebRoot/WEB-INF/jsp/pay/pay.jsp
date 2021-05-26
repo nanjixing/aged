@@ -16,7 +16,7 @@
         <div class="padding border-bottom">
             <ul class="search" style="padding-left: 10px;">
                 <li>
-                    <input type="text" placeholder="请输入订单号" name="name" class="input" value="${obj.paySn}"
+                    <input type="text" placeholder="请输入订单号" name="paySn" class="input" value="${obj.paySn}"
                            style="width: 250px;line-height: 17px;display: inline-block" />
                     <a href="javascript:void(0)" onclick="changeSearch()" class="button border-main icon-search">搜索</a>
                 </li>

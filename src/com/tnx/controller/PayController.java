@@ -64,7 +64,8 @@ public class PayController {
     public String findBySql(Pay pay, Model model){
         String sql = "select * from pay where 1=1 ";
         if(!isEmpty(pay.getPaySn())){
-            sql += " and pay_sn like '%"+pay.getPaySn()+"%'";
+            String sn = pay.getPaySn();
+            sql += " and pay_sn like '%"+sn.trim()+"%'";
         }
         sql += " order by id desc";
         Pager<Pay> pagers = payService.findBySqlRerturnEntity(sql);

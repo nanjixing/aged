@@ -13,14 +13,14 @@
 <body>
 <div class="panel admin-panel">
     <div class="panel-head" id="add">
-        <strong><span class="icon-pencil-square-o">修改用户</span> </strong>
+        <strong><span class="icon-pencil-square-o">修改订单</span> </strong>
     </div>
     <div class="body-content">
-        <form action="${ctx}/user/exUpdate" method="post" class="form-x">
+        <form action="${ctx}/itemOrder/exUpdate" method="post" class="form-x">
             <input type="hidden" name = "id" value="${obj.id}"/>
 
             <div class="form-group">
-                <div class="label"><label>用户名:</label></div>
+                <div class="label"><label>:</label></div>
                 <div class="field">
                     <input type="text" class="input w50" name="userName" data-validate="required:请输入用户名" value="${obj.userName}"/>
                     <div class="tips"></div>

@@ -22,18 +22,16 @@
     <script src="${ctx}/resource/js/jquery.js"></script>
     <script src="${ctx}/resource/js/pintuer.js"></script>
 </head>
-<body style="background-color: #f2f9fd">
-<div class="header bg-main">
+<body style="background-color: #4d98b9">
+<div class="header">
     <div class="logo margin-big-left fadein-top">
-        <h1>管理员后台</h1>
+        <h1 style="color: #0f0f0f">管理员后台</h1>
     </div>
     <div class="head-l">
         <a class="button button-little bg-green" href="" target="_blank">
-            <span class="icon-home"></span>前台首页
+            <span class="icon-home"></span>首页
         </a>
-        <a class="button button-little bg-blue" href="" target="_blank">
-            <span class="icon-wrench"></span>清除缓存
-        </a>
+
         <%--        <a class="button button-little bg-red" href="mtuichu.html">--%>
         <a class="button button-little bg-red" href="${ctx}/login/login">
             <span class="icon-power-off"></span>退出登录
@@ -50,13 +48,13 @@
         <li><a href="${ctx}/item/findBySql" target="right"><span class="icon-caret-right"></span>商品管理</a></li>
         <li><a href="${ctx}/itemOrder/findBySql" target="right"><span class="icon-caret-right"></span>订单管理</a></li>
         <li><a href="${ctx}/news/findBySql" target="right"><span class="icon-caret-right"></span>公告管理</a></li>
-        <li><a href="${ctx}/message/findBySql" target="right"><span class="icon-caret-right"></span>留言管理</a></li>
+<%--        <li><a href="${ctx}/message/findBySql" target="right"><span class="icon-caret-right"></span>留言管理</a></li>--%>
         <li><a href="${ctx}/pay/findBySql" target="right"><span class="icon-caret-right"></span>支付管理</a></li>
 
     </ul>
 </div>
 <ul class="bread">
-    <li><a href="{:}" target="right" class="icon-home">首页</a></li>
+    <li><a target="right" class="icon-home">首页</a></li>
     <li><a href="#">网站信息</a></li>
 </ul>
 <%--使用iframe框架自动增加滚轮--%>

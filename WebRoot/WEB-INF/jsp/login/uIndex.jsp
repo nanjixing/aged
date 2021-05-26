@@ -43,7 +43,7 @@
         <div class="left_yh font16" id="pageNav">
             <a href="${ctx}/login/uIndex">首页</a>
             <a href="${ctx}/news/list">公告</a>
-            <a href="${ctx}/message/add">留言</a>
+<%--            <a href="${ctx}/message/add">留言</a>--%>
         </div>
     </div>
 </div>

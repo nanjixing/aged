@@ -33,15 +33,16 @@
     <div class="left_yh" style="width: 350px;height: 420px;">
         <input type="hidden" id="id" value="${obj.id}">
         <div id="preview">
-            <div>
-                <img src="${obj.url1}" alt="" height="350" width="350">
+            <div class = "showimg">
+                <img id = "img1" src="${obj.url1}" alt="" height="350" width="350">
             </div>
             <div id=spec-list" style="margin-top: 5px;">
-                <ul class="list-h">
-                    <li><img src="${obj.url2}" height="80" width="80"></li>
-                    <li><img src="${obj.url3}" height="80" width="80"></li>
-                    <li><img src="${obj.url4}" height="80" width="80"></li>
-                    <li><img src="${obj.url5}" height="80" width="80"></li>
+                <ul class="list-h" >
+                    <li><img src="${obj.url1}" height="80" width="80" onclick="imgChange(this.src)"></li>
+                    <li><img src="${obj.url2}" height="80" width="80" onclick="imgChange(this.src)"></li>
+                    <li><img src="${obj.url3}" height="80" width="80" onclick="imgChange(this.src)"></li>
+                    <li><img src="${obj.url4}" height="80" width="80" onclick="imgChange(this.src)"></li>
+
                 </ul>
             </div>
         </div>
@@ -88,8 +89,9 @@
             </script>
         </p>
         <div class="buyFor">
-            <a href="${ctx}/sc/exAdd?itemId=${obj.id}" class="mstBuy">收藏</a>
-            <a href="javascript:void(0)" class="addCar">加入购物车</a>
+            <a href="${ctx}/sc/exAdd?itemId=${obj.id}" class="mstBuy"style="width: 100px">收藏</a>
+            <a href="javascript:void(0)" class="addCar" style="width: 100px">加入购物车</a>
+            <a href="javascript:void(0)" class="addCar" style="width: 100px">购买</a>
         </div>
     </div>
 </div>
@@ -128,6 +130,11 @@
 </div>
 
 <script>
+    function imgChange(url){
+        console.log(url)
+       document.getElementById("img1").src = url;
+
+    }
     $("#spXqpj a").click(function () {
         $(this).addClass("on").siblings().removeClass("on");//点击事件去掉
     });

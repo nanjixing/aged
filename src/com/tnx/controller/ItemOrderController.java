@@ -285,6 +285,13 @@ public class ItemOrderController extends BaseController {
         return "redirect:/itemOrder/my";//重定向到my方法刷新页面即可
     }
 
+    /**
+     * 评价商品
+     * @param orderId
+     * @param itemId
+     * @param model
+     * @return
+     */
     @RequestMapping("/pj")
     public String pj(Integer orderId, Integer itemId,Model model) {
         System.out.println(orderId + "-----" + itemId);
@@ -293,4 +300,21 @@ public class ItemOrderController extends BaseController {
         return "itemOrder/pj";
     }
 
+    @RequestMapping("/update")
+    public String update(Integer id,Model model){
+        ItemOrder itemOrder = itemOrderService.load(id);
+        model.addAttribute("obj", itemOrder);
+        return "itemOrder/update";
+    }
+
+    /**
+     * 后台更新
+     * @param itemOrder
+     * @return
+     */
+    @RequestMapping("/exUpdate")
+    public String exUpdate(ItemOrder itemOrder){
+        itemOrderService.update(itemOrder);
+        return "redirect:/itemOrder/findBySql.action";
+    }
 }

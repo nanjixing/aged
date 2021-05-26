@@ -24,10 +24,10 @@ public class AlipayConfig {
     public static String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2VEW6p2sOVs29GEHQ5hiqZfD6RHrJ0VviT7XBAEjmmvSbmB4qB7zDvsa9YU3skk1yiyLe9gCfedxl9UmX36JcluIgVmgurcbCpUuthmsRKjKA3omGE8pKKNcSRokm+o6NyHSFgsgzRcGgq//0DIadv+ZIw0mlIWypMjLFDCJJ3Af1LmZ1YgZN9nCdx2E1J6DaA32NwIxfaIg5nTtPgHPQqxe8tllEnW77zMmhONvkn1hWq8P9BMIIGg7sISPN0F/qIgiVU/iJL4Q6XWx/lQtiSa/wD5LBezMDHxMBxCQGf0phwmgScBArf+UGb0QngwvNuAVPh82COo8Vw68pirj9QIDAQAB";
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = " http://391661q0s0.wicp.vip/test1_war_exploded/pay/payNotify";
+	public static String notify_url = payConstants.urlHeader + "/test1_war_exploded/pay/payNotify";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String return_url = " http://391661q0s0.wicp.vip/test1_war_exploded/itemOrder/my";//以get请求传回参数
+	public static String return_url = payConstants.urlHeader + "/test1_war_exploded/itemOrder/my";//以get请求传回参数
 
 	// 签名方式
 	public static String sign_type = "RSA2";

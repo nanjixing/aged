@@ -144,8 +144,8 @@ input,select{font-size:14px;}
 #min_s,.min_s{float:left;display:block;width:25px;height:25px;border:1px solid #e3e5e9;text-align:center;line-height:21px;font-size:30px;color:#666;border-right:0;}
 #add_s,.add_s{float:left;display:block;width:25px;height:25px;border:1px solid #e3e5e9;text-align:center;line-height:21px;font-size:30px;color:#666;border-left:0;}
 #t_a,.t_a{float:left;display:block;width:25px;height:25px;border:1px solid #e3e5e9;text-align:center;line-height:21px;color:#666;}
-.buyFor{width:100%;overflow:hidden;margin-top:25px;}
-.buyFor a{display:block;width:176px;height:46px;float:left;text-align:center;line-height:46px;color:#fff;margin-right:34px;font-size:16px;}
+.buyFor{width:300px;overflow:hidden;margin-top:25px;}
+.buyFor a{display:block;width:250px;height:46px;float:left;text-align:center;line-height:46px;color:#fff;margin-right:34px;font-size:16px;}
 .mstBuy{background:#dd4545;}
 .mstBuy:hover{background:#bc3a3a;}
 .addCar{background:#ff5802;}

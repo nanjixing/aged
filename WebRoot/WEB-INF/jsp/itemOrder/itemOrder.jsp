@@ -41,18 +41,22 @@
                 <td>${data.user.userName}</td>
                 <td>${data.user.address}</td>
                 <td style="color: red">
+                    <c:if test="${data.status == -1}">待支付</c:if>
                     <c:if test="${data.status == 0}">待发货</c:if>
                     <c:if test="${data.status == 1}">已取消</c:if>
                     <c:if test="${data.status == 2}">待收货</c:if>
                     <c:if test="${data.status == 3}">已收货</c:if>
                 </td>
                 <td>
-                    <a class="button border-main" href="${ctx}/orderDetail/ulist?orderId=${data.id}"><span class="icon-edit">查看购买商品</span> </a>
-                    <c:if test="${data.status == 0}">
+                    <a class="button border-main" href="${ctx}/orderDetail/ulist?orderId=${data.id}"><span class="icon-edit">查看</span> </a>
+<%--                    <a class="button border-red" href="${ctx}/itemOrder/update?id=${data.id}"><span class="icon-trash-o">更新</span> </a>--%>
+                    <c:if test="${data.status == 0 && data.itemId == 0}">
                         <a class="button border-red" href="${ctx}/itemOrder/fh?id=${data.id}"><span class="icon-trash-o">去发货</span> </a>
                     </c:if>
+                    <c:if test="${data.status == 0 && data.itemId == 1}">
+                        <a class="border-red">线下取货</span> </a>
+                    </c:if>
                 </td>
-
             </tr>
         </c:forEach>
         <tr>

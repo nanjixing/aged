@@ -3,14 +3,10 @@ package com.tnx.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.google.zxing.WriterException;
 import com.tnx.base.BaseController;
-import com.tnx.po.Item;
-import com.tnx.po.ItemOrder;
-import com.tnx.po.Pay;
-import com.tnx.po.User;
+import com.tnx.po.*;
 import com.tnx.service.*;
 import com.tnx.utils.Constants;
-import com.tnx.utils.DateUtil;
-import com.tnx.utils.Pager;
+
 import com.tnx.utils.QRCode.QRCode;
 
 import com.tnx.utils.UUIDUtils;
@@ -48,6 +44,8 @@ public class TestController extends BaseController {
 
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private ScService scService;
 
     private String uCode;
     private String uPhone;
@@ -145,7 +143,9 @@ public class TestController extends BaseController {
         System.out.println(phone);
         User user = new User(phone);
         JSONObject js = new JSONObject();
+        //查找用户和订单
         User byEntity = userService.getByEntity(user);
+        js.put("user",byEntity);
         ItemOrder itemOrder = new ItemOrder();
         itemOrder.setUserId(user.getId());
         List<ItemOrder> itemOrders = itemOrderService.listAllByEntity(itemOrder);
@@ -154,10 +154,20 @@ public class TestController extends BaseController {
             String sql = "select * from item_order where user_id = " + byEntity.getId() +
                     " and item_id = 1 and status = 0 and isDelete = 0";
             List<Map<String, Object>> bySql = itemOrderService.listBySqlReturnMap(sql);
-//            List<ItemOrder> orderList = itemOrderService.listBySqlReturnEntity(sql);
+            List<ItemOrder> orderList = itemOrderService.listBySqlReturnEntity(sql);
+//            for(ItemOrder itemOrder1:orderList){
+//                System.out.println(itemOrder1.getPay().getInfo() + "===========" + itemOrder1.getUser().getRealName());
+//            }
+//            js.put("orderlist", orderList);
 //            将时间改为string
             for (Map map: bySql
                  ) {
+                for(ItemOrder itemOrder1:orderList){
+                    if(itemOrder1.getPay().getSn().equals(map.get("code"))){
+                        map.put("info",itemOrder1.getPay().getInfo());
+                        map.put("realName",itemOrder1.getUser().getRealName());
+                    }
+                }
                 map.replace("addTime",map.get("addTime").toString());
             }
 //            for (ItemOrder item: orderList
@@ -168,6 +178,23 @@ public class TestController extends BaseController {
                 js.put(Constants.ITEM_ORDERS,bySql);
 //                js.put("orderList",orderList);
             }
+//            //根据订单查询到商品图片并返回
+//            for (ItemOrder order:itemOrders
+//                 ) {
+//                //1. 从订单中查找出订单号
+//                Integer orderId = order.getId();
+//                //2. 从查找订单详情获取商品id
+//                if(orderId != null){
+//                    String odSql = "select * from order_detail where order_id ="+orderId;
+//                    OrderDetail od = orderDetailService.getBySqlReturnEntity(odSql);
+//                    //3. 将商品信息加入到json
+//                    if(od != null){
+//                        Item item = itemService.load(od.getItemId());
+//                        js.put("item",item);
+//                    }
+//                }
+//
+//            }
         }else{
             js.put(Constants.ITEM_ORDERS, "暂无订单");
         }
@@ -220,10 +247,14 @@ public class TestController extends BaseController {
         System.out.println(js.get("pay_orderid"));
         Integer id = Integer.valueOf(js.get("pay_orderid").toString());
         ItemOrder load = itemOrderService.load(id);
-        if(load.getStatus() == 3){
+        if(load.getStatus() == 3 || load.getStatus()==4){
             return "yqh";
         }
-        if(load != null){
+        if(load.getStatus() == 1){
+            return "yqx";
+        }
+
+        if(load != null && load.getStatus() == 0){
             ItemOrder itemOrder = new ItemOrder();
             itemOrder.setId(id);
             itemOrder.setStatus(3);
@@ -367,10 +398,16 @@ public class TestController extends BaseController {
         return jsonObject.toJSONString();
     }
 
+    /**
+     * 购买商品
+     * @param phone
+     * @param itemId
+     * @return
+     */
     @RequestMapping(value = "/buy",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public String buy(String phone, String itemId){
-        System.out.println(phone + " " + itemId);
+//        System.out.println("==========" + phone + " " + itemId);
         User user = new User();
         Item item = itemService.load(Integer.valueOf(itemId));
         user.setPhone(phone);
@@ -395,14 +432,128 @@ public class TestController extends BaseController {
         pay.setAddTime(new Date());
         if(u1 != null){
             itemOrderService.insert(order);
-           String sql = "select * from item_order where code = '"+orderAndPayCode+"'";
+            String sql = "select * from item_order where code = '"+orderAndPayCode+"'";
             ItemOrder byEntity = itemOrderService.getBySqlReturnEntity(sql);
             pay.setItemOrderId(byEntity.getId());
             payService.insert(pay);
+            //插入订单详情
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setItemId(item.getId());
+            orderDetail.setOrderId(byEntity.getId());
+            orderDetail.setStatus(0);
+            orderDetail.setNum(1);
+            orderDetail.setTotal(item.getPrice());
+            orderDetail.setUserId(u1.getId());
+            int insert = orderDetailService.insert(orderDetail);
+            if(insert == 1) return "success";
+            else return "fail";
+        }
+        return "fail";
+    }
+
+    /**
+     * 用户信息
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/userinfo",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String userInfo(String phone){
+        System.out.println("===============" + phone);
+        //判断用户是否存在查找用户
+        User user = new User();
+        if("".equals(phone)){
+            return "fail";
+        }
+        user.setPhone(phone);
+        User ruser = userService.getByEntity(user);
+        if(ruser == null){
+            return "fail";
+        }
+        ruser.setPassWord("密码请在网页端查看");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("userinfo",ruser);
+        return jsonObject.toJSONString();
+    }
+
+    /**
+     * 移动端收藏商品
+     * @param phone
+     * @param itemId
+     * @return
+     */
+    @RequestMapping(value = "/sc",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String sc(String phone, String itemId){
+        User user = new User();
+        Item item = itemService.load(Integer.valueOf(itemId));
+        user.setPhone(phone);
+        //获取电话号码对应的用户
+        User u1 = userService.getByEntity(user);
+        Sc sc = new Sc();
+        if(u1 != null){
+            sc.setUserId(u1.getId());
+            if(item!= null){
+                sc.setItemId(item.getId());
+            }
+            int insert = scService.insert(sc);
+            if(insert == 0){
+                return "fail";
+            }
+            item.setScNum(item.getScNum()+1);
+            itemService.updateById(item);
             return "success";
         }
         return "fail";
     }
+
+    /**
+     * 获得收藏商品
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/getscgoods",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String getscgoods(String phone){
+        User user = new User();
+        JSONObject jsonObject = new JSONObject();
+        user.setPhone(phone);
+        //获取电话号码对应的用户
+        User u1 = userService.getByEntity(user);
+        String sql = "select * from sc where user_id="+u1.getId();
+        List<Sc> scs = scService.listBySqlReturnEntity(sql);
+        if(scs.size() > 0){
+            List<Item> list = new ArrayList<>();
+            for(Sc sc: scs){
+                list.add(itemService.load(sc.getItemId()));
+            }
+            jsonObject.put("scgoods",list);
+            return jsonObject.toJSONString();
+        }
+        jsonObject.put("scgoods","fail");
+        return "fail";
+    }
+
+    @RequestMapping(value = "/qxsc",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String qxsc(String itemId,String phone){
+        User user = new User();
+        Item item = itemService.load(Integer.valueOf(itemId));
+        user.setPhone(phone);
+        //获取电话号码对应的用户
+        User u1 = userService.getByEntity(user);
+        if(u1 != null){
+            Sc sc = new Sc();
+            if(item != null){
+                String sql = "delete from sc where user_id="+u1.getId()+" and item_id="+item.getId();
+                scService.deleteBySql(sql);
+                return "success";
+            }
+
+        }
+        return "fail";
+    }
+    //生成订单唯一UUID
     public static synchronized String getOrderNo() {
         return UUIDUtils.random().toUpperCase();
     }
