@@ -124,7 +124,7 @@
 
 				});
 			}
-
+			
 		},
 		onShow() {
 			var userPhone = uni.getStorageSync('userPhone');
@@ -137,7 +137,7 @@
 			}
 			this.phone = userPhone;
 			console.log(this.phone)
-
+            this.getOrders()
 
 		}
 

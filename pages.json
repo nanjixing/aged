@@ -110,6 +110,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/updateinfo/updateinfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		

@@ -35,6 +35,9 @@
 				</view>
 				<view class="info_83">
 				</view>
+				<button type="primary" @click="updateinfo()">修改信息</button>
+				<view class="info_83">
+				</view>
 				<button type="primary" @click="utuichu()">退出</button>
 			</view>
 
@@ -62,6 +65,11 @@
 				uni.navigateTo({
 					url: '/pages/index/index',
 				
+				});
+			},
+			updateinfo(){
+				uni.navigateTo({
+					url: '/pages/updateinfo/updateinfo',
 				});
 			}
 		},
