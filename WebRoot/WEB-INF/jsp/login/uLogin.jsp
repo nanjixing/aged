@@ -10,7 +10,7 @@
     <script src="${ctx}/resource/user/js/jquery.luara.0.0.1.min.js"></script>
 </head>
 <body>
-<div class="width100 hidden_yh" style="height: 573px;background: url('${ctx}/resource/user/images/loginBG1.jpg') no-repeat center">
+<div class="width100 hidden_yh" style="height: 700px;background: url('${ctx}/resource/user/images/loginBG1.jpg') no-repeat center">
     <div class="width1200 hidden_yh center_yh" style="margin-top: 75px">
         <div class="right_yh bj_fff" style="width:408px;height: 438px;">
             <form action="${ctx}/login/utoLogin" method="post">
@@ -27,6 +27,9 @@
                     <input type="submit" value="登录" class="center_yh" style="width: 100%;height: 43px;font-size: 16px;background: #dd4545;outline: none;border: 0;color: #fff ;cursor:pointer;">
                 </div>
             </form>
+            <div class="width100 box-sizing hidden_yh" style="width: 336px;">
+                <a class="center_yh" style="width: 200px;height: 43px;font-size: 16px;background: #456bdd;outline: none;border: 0;color: #fff ;cursor:pointer;margin-left: 35px;" href="${ctx}/login/res">去注册</a>
+            </div>
         </div>
     </div>
 </div>

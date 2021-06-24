@@ -63,7 +63,6 @@
                                 <div style="width: 838px;border-bottom: 1px dashed #ddd;padding-top: 30px;padding-bottom: 30px;" class="hidden_yh center_yh">
                                     <a href="${ctx}/item/view?id=${chil.item.id}">
                                         <img src="${chil.item.url1}" width="100" height="100" class="left_yh" style="padding-right: 10px">
-
                                     </a>
 <%--                                    <img src="${chil.item.url1}" width="100" height="100" class="left_yh" style="padding-right: 10px">--%>
                                     <div class="left_yh" style="width: 580px;">

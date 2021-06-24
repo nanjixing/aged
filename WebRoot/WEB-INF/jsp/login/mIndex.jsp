@@ -33,7 +33,7 @@
         </a>
 
         <%--        <a class="button button-little bg-red" href="mtuichu.html">--%>
-        <a class="button button-little bg-red" href="${ctx}/login/login">
+        <a class="button button-little bg-red" href="${ctx}/login/toLogOut">
             <span class="icon-power-off"></span>退出登录
         </a>
     </div>
@@ -45,7 +45,7 @@
         <%--        针对item_category表，target目标值为iframe标签--%>
         <li><a href="${ctx}/itemCategory/findBySql" target="right"><span class="icon-caret-right"></span>类目管理</a></li>
         <li><a href="${ctx}/user/findBySql" target="right"><span class="icon-caret-right"></span>用户管理</a></li>
-        <li><a href="${ctx}/item/findBySql" target="right"><span class="icon-caret-right"></span>商品管理</a></li>
+        <li><a href="${ctx}/item/findBySql?flag=0" target="right"><span class="icon-caret-right"></span>商品管理</a></li>
         <li><a href="${ctx}/itemOrder/findBySql" target="right"><span class="icon-caret-right"></span>订单管理</a></li>
         <li><a href="${ctx}/news/findBySql" target="right"><span class="icon-caret-right"></span>公告管理</a></li>
 <%--        <li><a href="${ctx}/message/findBySql" target="right"><span class="icon-caret-right"></span>留言管理</a></li>--%>

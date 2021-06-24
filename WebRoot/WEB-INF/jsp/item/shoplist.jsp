@@ -29,7 +29,7 @@
 </div>
 <%--排序功能--%>
 <div class="width1198 center_yh" style="height: 35px;background: #f0f0f0; border: 1px solid #ddd;margin-top:25px;">
-    <a href="${ctx}/item/shoplist?categoryIdTwo=${obj.categoryIdTwo}" class="mR">默认</a>
+<%--    <a href="${ctx}/item/shoplist?categoryIdTwo=${obj.categoryIdTwo}" class="mR">默认</a>--%>
 <%--    这里get请求参数一致同样也会自动映射--%>
     <a href="${ctx}/item/shoplist?price=1&categoryIdTwo=${obj.categoryIdTwo}&condition=${condition}" class="mR">
         价格

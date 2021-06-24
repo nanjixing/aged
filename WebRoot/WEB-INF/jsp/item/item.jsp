@@ -12,11 +12,14 @@
 </head>
 <body>
 <div class="panel admin-panel">
-    <form action="${ctx}/item/findBySql" id="listform" method="post">
+    <form action="${ctx}/item/findBySql?flag=0" id="listform" method="post">
         <div class="padding border-bottom">
             <ul class="search" style="padding-left: 10px;">
                 <li>
                     <a class="button border-main icon-plus-square-o" href="${ctx}/item/add">添加商品</a>
+                </li>
+                <li>
+                    <a class="button border-main icon-plus-square-o" href="${ctx}/item/findBySql?flag=1">查看已下架商品</a>
                 </li>
                 <li>
                     <input type="text" placeholder="请输入商品名称" name="name" class="input" value="${obj.name}"
@@ -47,7 +50,12 @@
             <td>${data.erji.name}</td>
             <td>
                 <a class="button border-main" href="${ctx}/item/update?id=${data.id}"><span class="icon-edit">修改</span> </a>
-                <a class="button border-red" href="${ctx}/item/delete?id=${data.id}"><span class="icon-trash-o">下架</span> </a>
+                <c:if test="${data.isDelete == 0}">
+                    <a class="button border-red" href="${ctx}/item/delete?id=${data.id}"><span class="icon-trash-o">下架</span> </a>
+                </c:if>
+                <c:if test="${data.isDelete == 1}">
+                    <a class="button border-red" href="${ctx}/item/reShow?id=${data.id}"><span class="icon-trash-o">上架</span> </a>
+                </c:if>
             </td>
 
         </tr>
@@ -56,7 +64,7 @@
             <td colspan="8">
                 <div class="pagelist">
                     <!--分页开始-->
-                    <pg:pager url="${ctx}/item/findBySql" maxIndexPages="5" items="${pagers.total}" maxPageItems="5" export="curPage=pageNumber">
+                    <pg:pager url="${ctx}/item/findBySql1" maxIndexPages="5" items="${pagers.total}" maxPageItems="5" export="curPage=pageNumber">
                         <pg:last>
                             共${pagers.total}记录，共${pageNumber}页，
                         </pg:last>

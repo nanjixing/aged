@@ -153,7 +153,7 @@ public class TestController extends BaseController {
         //在item_order中插入没发货的时候还要判断item_id不为1，因为这里将item_id作为判断线上线下的标志
         if(itemOrders.size() > 0){
             String sql = "select * from item_order where user_id = " + byEntity.getId() +
-                    " and item_id = 1 and status = 0 and isDelete = 0";
+                    " and item_id = 1 and status = 0 and isDelete = 0 order by id desc";
             List<Map<String, Object>> bySql = itemOrderService.listBySqlReturnMap(sql);
             List<ItemOrder> orderList = itemOrderService.listBySqlReturnEntity(sql);
 //            for(ItemOrder itemOrder1:orderList){
@@ -613,6 +613,38 @@ public class TestController extends BaseController {
             item.setUrl2(payConstants.urlHeader + item.getUrl2());
         }
         return list;
+    }
+
+    /**
+     * 更新用户
+     * @param formdata
+     * @return
+     */
+    @RequestMapping(value = "/updateuser",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public String updateuser(String formdata){
+        JSONObject js = new JSONObject();
+//        验证是否登录成功
+        JSONObject parseObject = JSONObject.parseObject(formdata);
+        String username = (String) parseObject.get("username");
+        String realname = (String) parseObject.get("realname");
+        String userid = (String) parseObject.get("userid");
+        String address = (String) parseObject.get("address");
+        System.out.println( username + "---" + realname+"---" + userid+"---" + address);
+        User user = new User();
+
+
+        User byEntity = userService.load(Integer.valueOf(userid));
+        if(byEntity != null){
+            user.setId(Integer.valueOf(userid));
+            user.setUserName(username);
+            user.setRealName(realname);
+            user.setAddress(address);
+            userService.updateById(user);
+            return "success";
+        }else{
+           return "error";
+        }
     }
 
     //生成订单唯一UUID

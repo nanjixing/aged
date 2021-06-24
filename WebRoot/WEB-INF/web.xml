@@ -7,6 +7,7 @@
     <!--    默认页面-->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
+
     </welcome-file-list>
 
     <!--    引入以applicationContext-开头的xml文件-->
@@ -64,4 +65,15 @@
         <filter-name>SystemContextFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+<!--    配置404页面-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorcode/404error.jsp</location>
+    </error-page>
+<!--    配置500页面-->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errorcode/500error.jsp</location>
+    </error-page>
 </web-app>

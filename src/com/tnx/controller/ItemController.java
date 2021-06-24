@@ -42,8 +42,34 @@ public class ItemController extends BaseController {
      * @return
      */
     @RequestMapping("/findBySql")
-    public String findBySql(Model model, Item item) {
-        String sql = "select * from item where isDelete = 0 ";
+    public String findBySql(Model model, Item item, Integer flag) {
+        String sql = "";
+        if(flag == 1){
+            sql = "select * from item where isDelete = 1 ";
+        }else{
+            sql = "select * from item where isDelete = 0 ";
+        }
+        if (!isEmpty(item.getName())) {
+            sql += " and name like '%" + item.getName() + "%' ";
+        }
+        sql += " order by id desc";
+        Pager<Item> pagers = itemService.findBySqlRerturnEntity(sql);
+        model.addAttribute("pagers", pagers);
+        model.addAttribute("obj", item);
+        return "item/item";
+    }
+
+    /**
+     * 查询商品以及搜索商品
+     *
+     * @param model
+     * @param item
+     * @return
+     */
+    @RequestMapping("/findBySql1")
+    public String findBySql1(Model model, Item item) {
+        String sql = "";
+        sql = "select * from item where isDelete = 0 ";
         if (!isEmpty(item.getName())) {
             sql += " and name like '%" + item.getName() + "%' ";
         }
@@ -85,7 +111,7 @@ public class ItemController extends BaseController {
         item.setScNum(0);
 
         itemService.insert(item);
-        return "redirect:/item/findBySql.action";
+        return "redirect:/item/findBySql.action?flag=0";
     }
 
     /**
@@ -167,7 +193,7 @@ public class ItemController extends BaseController {
         if ("".equals(item.getUrl4())) item.setUrl4(load.getUrl4());
         if ("".equals(item.getUrl5())) item.setUrl5(load.getUrl5());
         itemService.updateById(item);
-        return "redirect:/item/findBySql.action";
+        return "redirect:/item/findBySql.action?flag=0";
     }
 
     /**
@@ -181,9 +207,21 @@ public class ItemController extends BaseController {
         Item obj = itemService.load(id);
         obj.setIsDelete(1);
         itemService.updateById(obj);
-        return "redirect:/item/findBySql.action";
+        return "redirect:/item/findBySql.action?flag=0";
     }
-
+    /**
+     * 下架商品
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("/reShow")
+    public String reShow(Integer id) {
+        Item obj = itemService.load(id);
+        obj.setIsDelete(0);
+        itemService.updateById(obj);
+        return "redirect:/item/findBySql.action?flag=0";
+    }
     /**
      * 可以通过搜索或者点击二级类目查询商品并且能够根据商品进行价格或销量排序(默认按照id）
      *

@@ -60,7 +60,7 @@ public class LoginController extends BaseController {
     }
 
     /**
-     * 登录验证,根据输入信息判断是否存在该用户
+     * 登录验证,根据输入信息判断是否存在该管理员
      * @param manage
      * @param request
      * @return
@@ -68,6 +68,10 @@ public class LoginController extends BaseController {
     @RequestMapping("/toLogin")
     public String toLogin(Manage manage, HttpServletRequest request){
         //System.out.println(manage.getUserName() + request.getParameter("userName"));
+//        Object attribute = request.getSession().getAttribute(Constants.MANAGE);
+//        if(attribute==null){
+//            return "redirect:/login/mLogin";
+//        }
         Manage entity = manageService.getByEntity(manage);
         if(entity.getUserName() == null || entity.getPassWord() == null){
             return "redirect:/login/toLogOut";
